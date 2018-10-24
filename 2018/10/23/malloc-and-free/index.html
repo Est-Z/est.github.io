@@ -17,7 +17,7 @@
 <meta property="og:description" content="malloc()函数与free()函数">
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://est-c.coding.me/Est-C.coding.me/2018/10/23/malloc-and-free/1.PNG">
-<meta property="og:updated_time" content="2018-10-23T16:22:15.512Z">
+<meta property="og:updated_time" content="2018-10-24T07:24:38.311Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="malloc() and free()">
 <meta name="twitter:description" content="malloc()函数与free()函数">
@@ -147,6 +147,7 @@
       
             
             <p>malloc()函数与free()函数<br><a id="more"></a></p>
+<p>在介绍malloc()与free()之前，我们先看一下alloc()与afree()函数，了解内存地址运算</p>
 <h2 id="alloc-afree"><a href="#alloc-afree" class="headerlink" title="alloc()/afree()"></a>alloc()/afree()</h2><p>alloc()函数返回一个指向n个连续字符存储单元的指针<br>afree()函数释放已分配的存储空间</p>
 <p>这两个函数功能类是malloc()与free()，但它们是“不完善的”，因为alloc()与free()是以栈的方式（后进先出）进行存储空间管理的</p>
 <h3 id="alloc-与afree-的实现"><a href="#alloc-与afree-的实现" class="headerlink" title="alloc()与afree()的实现"></a>alloc()与afree()的实现</h3><p>alloc()是对一个大数组allocbuf中的空间进行分配</p>
@@ -159,7 +160,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年10月24日 00:22</p>
+        <p>最后更新： 2018年10月24日 15:24</p>
         <p>原始链接： <a class="post-url" href="/Est-C.coding.me/2018/10/23/malloc-and-free/" title="malloc() and free()">https://Est-C.coding.me/Est-C.coding.me/2018/10/23/malloc-and-free/</a></p>
         <footer>
             <a href="https://Est-C.coding.me/Est-C.coding.me">
@@ -283,6 +284,16 @@
     
 
 <nav id="article-nav">
+  
+    <a href="/Est-C.coding.me/2018/10/24/Array/" id="article-nav-newer" class="article-nav-link-wrap">
+
+      <span class="article-nav-title">
+        <i class="fa fa-hand-o-left" aria-hidden="true"></i>
+        
+          Array
+        
+      </span>
+    </a>
   
   
     <a href="/Est-C.coding.me/2018/10/21/String/" id="article-nav-older" class="article-nav-link-wrap">
