@@ -38,7 +38,7 @@
 <meta property="og:image" content="https://est-c.coding.me/Est-C.coding.me/2018/10/26/排序算法/RadixSort.gif">
 <meta property="og:image" content="https://est-c.coding.me/Est-C.coding.me/2018/10/26/排序算法/RadixSort2.PNG">
 <meta property="og:image" content="https://est-c.coding.me/Est-C.coding.me/2018/10/26/排序算法/all.PNG">
-<meta property="og:updated_time" content="2018-11-01T15:23:05.158Z">
+<meta property="og:updated_time" content="2018-11-01T15:24:27.870Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="排序算法">
 <meta name="twitter:description" content="This is a blog to show Sort.">
@@ -216,8 +216,8 @@
 <h2 id="O-n-k"><a href="#O-n-k" class="headerlink" title="O(n+k)"></a>O(n+k)</h2><h3 id="计数排序"><a href="#计数排序" class="headerlink" title="计数排序"></a>计数排序</h3><p>计数排序不是基于比较的排序</p>
 <p>基本思想：<br>    将要排序的序列按照一定关系存入额外开辟的数组中(数组下标表示该元素值，该下标对应的值表示该值的元     素个数 eg: counter[75]=1表示有一个值为75的元素)</p>
 <p>优点：    可将时间复杂度降低到线性<br>缺点：    输入必须是有确定范围的数(数的范围不能太大)</p>
-<pre><code>当O(K)&gt;O(nlogn)时，性能不如比较排序
-</code></pre><p><img src="/Est-C.coding.me/2018/10/26/排序算法/CountingSort.gif" alt="1"></p>
+<p>当O(K)&gt;O(nlogn)时，性能不如比较排序</p>
+<p><img src="/Est-C.coding.me/2018/10/26/排序算法/CountingSort.gif" alt="1"></p>
 <p><img src="/Est-C.coding.me/2018/10/26/排序算法/CountingSort2.PNG" alt="2"></p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><span class="line">int CountingSort(ElemType L[],int n)&#123;</span><br><span class="line">	</span><br><span class="line">	int i;</span><br><span class="line">	int len = n;</span><br><span class="line">	</span><br><span class="line">	ElemType max=L[0],min=L[0];			//查找最大元素 </span><br><span class="line">	<span class="keyword">for</span>( i = 0 ; i &lt; n ; i++ )&#123;</span><br><span class="line">		min = min&lt;L[i]?min:L[i];</span><br><span class="line">		max = max&gt;L[i]?max:L[i];</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	ElemType *counter = (ElemType*)malloc(sizeof(ElemType)*(max-min+1));//申请所需数组空间 大小为max-min+1 </span><br><span class="line">	<span class="keyword">if</span>(!counter)&#123;</span><br><span class="line">		free(counter);</span><br><span class="line">		<span class="built_in">return</span> -1;</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="keyword">for</span>( i = 0 ; i &lt;= max-min ; i++ )		//初始化数组 </span><br><span class="line">		counter[i] = 0;</span><br><span class="line"></span><br><span class="line">	<span class="keyword">for</span>( i = 0 ; i &lt; len ; i++ )			//统计数值出现次数 </span><br><span class="line">		counter[L[i]-min]++;</span><br><span class="line">			</span><br><span class="line">	//逆向遍历数组 保持稳定 </span><br><span class="line">	<span class="keyword">for</span>( i = max-min ; i &gt;= 0 ; i--)</span><br><span class="line">		<span class="keyword">while</span>( counter[i]-- != 0)</span><br><span class="line">			L[--len] = i + min;</span><br><span class="line">		</span><br><span class="line">	free(counter);	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 <h3 id="桶排序"><a href="#桶排序" class="headerlink" title="桶排序"></a>桶排序</h3><p>桶排序是计数排序的升级版 是一种函数映射关系(类哈希的链式结构)</p>
@@ -234,7 +234,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年11月01日 23:23</p>
+        <p>最后更新： 2018年11月01日 23:24</p>
         <p>原始链接： <a class="post-url" href="/Est-C.coding.me/2018/10/26/排序算法/" title="排序算法">https://Est-C.coding.me/Est-C.coding.me/2018/10/26/排序算法/</a></p>
         <footer>
             <a href="https://Est-C.coding.me/Est-C.coding.me">
