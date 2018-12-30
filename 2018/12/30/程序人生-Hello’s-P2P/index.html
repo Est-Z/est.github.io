@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Est">
 <meta property="og:description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-30T07:46:10.006Z">
+<meta property="og:updated_time" content="2018-12-30T07:49:54.557Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序人生-Hello’s P2P">
 <meta name="twitter:description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
@@ -265,7 +265,36 @@
 <h4 id="3-3-5算数操作"><a href="#3-3-5算数操作" class="headerlink" title="3.3.5算数操作"></a>3.3.5算数操作</h4><p>在hello.c中出现的算术操作有一处，就是循环变量i的自增运算。在汇编代码中的体现是：addl    $1,-4(%rbp)。其中%rbp-4是存放i的地址，-4（%rbp）就是i，然后add是加法操作，其指令模式是：add  src A，dst B。作用是把A和B相加，得到的值存在B中。因为i是int型 的，所以用l作为后缀，表明是四字节加法。$1是立即数，表示十进制的1。那么整句代码的意思就是，把i+1的值再放到i里面，也就实现了i的自增运算。</p>
 <h4 id="3-3-6关系操作"><a href="#3-3-6关系操作" class="headerlink" title="3.3.6关系操作"></a>3.3.6关系操作</h4><p>在hello.c中出现的关系操作有两处：<br>（1）argc!=3。在汇编代码中的体现是cmpl        $3, -20(%rbp)。cmp执行的是比较运算。指令格式为：cmp    src A, dst B。作用效果是执行一个B-A的减法运算，将标志位更新，然后其他语句根据标志位来判断A和B的大小关系(比如其下一句为je    .L2，就是根据其设置的标志位来判断A和B的大小关系，如果相等就跳转至.L2)。然后同样的l的后缀表示的四字节的运算。总的来说cmp运算就是一个不赋值的减法，纯粹为了更新标志位。根据上面的讲述我们可以得出这句代码的意思为：将存放在%rbp-20地址中的数与3相减，设置标志位，然后结合下一句就是如果两者相等，就跳转执行.L2处的代码。<br>（2）i&lt;10。在汇编代码中的体现是cmpl $9, -4(%rbp)。cmp上面已经解释过了，此处就直接解释这句代码的意思。将存放在%rbp-4中的数与9进行相减运算，更新标志位。下一句为jle        .L4。就是如果-4（%rbp）&lt;=9,就跳转.L4的代码（此处.L4处的代码即为循环体的代码，符合hello.c所描述的程序行为）。</p>
 <h4 id="3-3-7数组存取"><a href="#3-3-7数组存取" class="headerlink" title="3.3.7数组存取"></a>3.3.7数组存取</h4><p>在hello.c中出现了一个字符指针型数组，即char *argv[]。这个数组是作为main函数的参数存在的，是一个局部变量，所以我们只能在栈帧里面找到它。在这里我们给出main函数的部分栈帧结构：</p>
-<p>|:——————–:|<br>|调用main函数的返回地址|<br>|%rbp（栈帧顶部）(%rbp-0)|<br>|(%rbp-8)|<br>|(%rbp-16)|<br>|argc(%rbp-20)|<br>|(%rbp-24)|<br>|argv(%rbp-32)|</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">调用main函数的返回地址</td>
+</tr>
+<tr>
+<td style="text-align:center">%rbp（栈帧顶部）(%rbp-0)</td>
+</tr>
+<tr>
+<td style="text-align:center">(%rbp-8)</td>
+</tr>
+<tr>
+<td style="text-align:center">(%rbp-16)</td>
+</tr>
+<tr>
+<td style="text-align:center">argc(%rbp-20)</td>
+</tr>
+<tr>
+<td style="text-align:center">(%rbp-24)</td>
+</tr>
+<tr>
+<td style="text-align:center">argv(%rbp-32)</td>
+</tr>
+</tbody>
+</table>
 <p>(%rbp-32)处存放的就是字符指针型数组的首地址，通过首地址+0、+8、+16就可以一次访问到它的元素argv[0]、argv[1]、argv[2]。根据地址访问我们就能实际操作数组里面的数据了。具体汇编代码可见图3-7。</p>
 <h4 id="3-3-8控制转移"><a href="#3-3-8控制转移" class="headerlink" title="3.3.8控制转移"></a>3.3.8控制转移</h4><p>汇编代码实现控制转移主要通过jx指令，下面列出了jx的相关操作：</p>
 <table>
@@ -326,8 +355,10 @@
 </tr>
 </tbody>
 </table>
-<p>通常JX指令要结合cmp指令（设置标志位）或者test指令来实现控制转移。<br>程序中的控制转移共有两处：<br>第一个是单分支的if条件语句，转换为goto风格即为<br>t = test-expr<br>if(!t)<br>    goto next<br>if-statement<br>在图3-8中我们可以看到它是如何根据跳转指令实现控制转移的，模式与上面所写的goto模式完全相同。</p>
-<p>图3-8 if分支语句的控制实现分析<br>第二处是for循环语句，for循环的goto风格为：<br>loop:<br>    body-statement<br>    update-expr;<br>    t = test-expr;<br>    if(t)<br>        goto loop;<br>    else-statement<br>    基本模式就是先执行循环体，然后循环变量自增，之后判断循环边界，如果满足就回跳，不满足就顺序向下跳出循环。具体实现可以看图3-9。</p>
+<p>通常JX指令要结合cmp指令（设置标志位）或者test指令来实现控制转移。<br>程序中的控制转移共有两处：<br>第一个是单分支的if条件语句，转换为goto风格即为<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">t = <span class="built_in">test</span>-expr</span><br><span class="line"><span class="keyword">if</span>(!t)</span><br><span class="line">	goto next</span><br><span class="line"><span class="keyword">if</span>-statement</span><br></pre></td></tr></table></figure></p>
+<p>在图3-8中我们可以看到它是如何根据跳转指令实现控制转移的，模式与上面所写的goto模式完全相同。</p>
+<p>图3-8 if分支语句的控制实现分析<br>第二处是for循环语句，for循环的goto风格为：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">loop:</span><br><span class="line">	body-statement</span><br><span class="line">	update-expr;</span><br><span class="line">	t = <span class="built_in">test</span>-expr;</span><br><span class="line">	<span class="keyword">if</span>(t)</span><br><span class="line">		goto loop;</span><br><span class="line">	<span class="keyword">else</span>-statement</span><br></pre></td></tr></table></figure></p>
+<p>基本模式就是先执行循环体，然后循环变量自增，之后判断循环边界，如果满足就回跳，不满足就顺序向下跳出循环。具体实现可以看图3-9。</p>
 <p>图3-9 for循环语句控制实现分析</p>
 <h4 id="3-3-9函数操作"><a href="#3-3-9函数操作" class="headerlink" title="3.3.9函数操作"></a>3.3.9函数操作</h4><p>函数操作主要表现在各个函数之间的调用，一个函数要调用另一个函数通常要实现两个块内容：数据传送和控制转移。函数调用的大致过程如下：首先是调用时要将参数（如果有参数的话）通过寄存器和栈准备好，然后通过call指令将控制转移给被调用函数。被调用函数执行完所有操作后要给调用函数已反馈。这个时候可分为数据传送和控制转移两部分。函数返回值默认放在%rax中，控制权通过ret指令返回给调用函数，至此一个函数的调用过程才完整结束。接下来详细说明一下数据传送的细节，说说函数是怎么传参的。<br>在64位系统中，共有六个寄存器用来存放参数，分别是%rdi、%rsi、%rdx、%rcx、%r8、%r9，分别对应于第1-6个参数。当函数参数大于七个的时候将被存放在栈中，由最后一个参数到第七个参数一次入栈。它们在栈中通过栈帧指针（可选）或者栈指针被调用。详细的栈帧结构看图3-10。</p>
 <p>图3-10 栈帧结构<br>程序中设计的函数调用有以下几处：<br>（1）系统函数调用main函数<br>数据传送：第一个参数int argc被存放在%edi中，第二个参数char *argv[]被存放在%rsi中。<br>控制转移：hello.s代码中并没有实际体现，但是其确实是被系统函数call了的。<br>数据返回：将$0 存放在%eax中作为返回值。<br>控制返回：①通过ret；②通过call exit。<br>（2）main函数调用puts函数<br>数据传送：将字符串.LC0（首地址之类的信息）存放在%edi中作为第一个参数，也是唯一一个参数。<br>控制转移：call puts<br>数据返回：无<br>控制返回：通过ret<br>（3）main函数调用exit函数<br>数据传送：将$1送至%edi中作为唯一一个参数。<br>控制转移：call exit。<br>数据返回：无。<br>控制返回：exit是系统退出函数，不会再将控制流返回。<br>（4）main函数调用printf函数<br>数据传送：将第三个参数argv[2]传送至%rdx，将第二个参数argv[1]传送至%rsi，将第一个参数字符串.LC1（首地址）传送至%edi。<br>控制转移：call printf。<br>数据返回：无。<br>控制返回：通过ret。<br>（5）main函数调用sleep函数<br>数据传送：将参数sleepsecs传送至%edi作为唯一一个参数。<br>控制转移：call sleep。<br>数据返回：无。<br>控制返回：通过ret。<br>（6）main函数调用getchar函数<br>数据传送：无。<br>控制转移：call getchar。<br>数据返回：该代码中main函数并未接收被调用函数的返回值。<br>控制返回：通过ret。</p>
@@ -395,16 +426,14 @@
 <p>节头表<br>    下面是节头表部分，这里有各个节的基本信息，具体情况如图5-2所示。与可重定位ELF格式一样，节头表表明了各个节的名称、类型、地址、偏移量等信息。该文件共有25个节</p>
 <p>图5-2 helloELF格式的节头表</p>
 <p>图5-3 helloELF格式的程序头表展示<br>    然后是程序头表。程序头表中记录了各个段的信息，具体情况如图5-3。其中offset是目标文件中的便偏移、virtaddr/physaddr为内存地址、align为对齐要求、filesiz为目标文件段大小、memsiz为内存中段大小、flags为运行时访问权限。</p>
-<h3 id="5-4-hello的虚拟地址空间"><a href="#5-4-hello的虚拟地址空间" class="headerlink" title="5.4 hello的虚拟地址空间"></a>5.4 hello的虚拟地址空间</h3><pre><code>通过使用edb加载hello，分别查看被加载的两大部分：数据段和代码段。它们在虚拟地址空间的对应地址为0x0000 0000 0060 0000~0x0000 0000 0060 1000和
-</code></pre><p>0x0000 0000 0040 0000~0x0000 0000 0040 1000。查看dump可以发现每个节开始的地址与图5-2节头表所示地址完全相同，如图5-4所示。</p>
+<h3 id="5-4-hello的虚拟地址空间"><a href="#5-4-hello的虚拟地址空间" class="headerlink" title="5.4 hello的虚拟地址空间"></a>5.4 hello的虚拟地址空间</h3><p>通过使用edb加载hello，分别查看被加载的两大部分：数据段和代码段。它们在虚拟地址空间的对应地址为0x0000 0000 0060 0000~0x0000 0000 0060 1000和<br>0x0000 0000 0040 0000~0x0000 0000 0040 1000。查看dump可以发现每个节开始的地址与图5-2节头表所示地址完全相同，如图5-4所示。</p>
 <p>图5-4 使用edb查看几个典型段的虚拟地址</p>
 <h3 id="5-5-链接的重定位过程分析"><a href="#5-5-链接的重定位过程分析" class="headerlink" title="5.5 链接的重定位过程分析"></a>5.5 链接的重定位过程分析</h3><p>通过objdump -d -r hello &gt; helloout.asm指令生成可执行文件的反汇编代码。将其与可重定位生成的反汇编hello.asm代码相比较，我们大致可以看到重定位的过程。<br>当汇编器生成一个可重定位文件时，它并不知道数据和代码最终会被放在内存的什么位置，它也不知道这个模块引用的任何外部定义的函数或者全局变量的位置。所以，无论何时汇编器遇到对最终位置未知的目标引用，它就会生成一个重定位条目（如图5-5），告诉链接器在将目标文件合并成可执行文件的时候如何修改这个引用。代码的重定位条目放在.rel.text（可回看图4-4）中，已初始化数据的重定位条目放在.rel.data。重定位条目的格式中重点有四个部分：偏移量（相距被引用节起始偏移量）、类型（主要有R_X86_64_PC32和R_X86_64_32两种）、符号名称（目标所在节）、加数（相较于目标所在节起始位置的引用偏移）。</p>
 <p>图5-5 hello.asm中的重定位信息<br>下面我们详细说一下究竟如何根据重定位条目计算引用的地址。重定位条目根据类型分为两种相对引用（R_X86_64_PC32）和绝对引用（R_X86_64_32）。相对引用是根据距离运行时pc的地址进行引用，此时我们通常会将pc的值进行修改，进行控制转移，一般用于函数调用。绝对引用就是计算其绝对地址，不修改pc值，只进行数据访问。</p>
 <h4 id="5-5-1相对地址的重定位"><a href="#5-5-1相对地址的重定位" class="headerlink" title="5.5.1相对地址的重定位"></a>5.5.1相对地址的重定位</h4><p>首先是相对地址（<em>refptr）的计算方法：符号所在节首地址 + 加数 + 符号被引用节首地址 + 偏移量。运行时，碰到相对引用重定位信息时，就将pc的值压入栈中，然后更新pc的值为pc+</em>refptr，就实现了控制转移。</p>
 <h4 id="5-5-2绝对地址的重定位"><a href="#5-5-2绝对地址的重定位" class="headerlink" title="5.5.2绝对地址的重定位"></a>5.5.2绝对地址的重定位</h4><p>相较于基于相对地址的重定位，绝对地址的重定位就简单一些了。通过符号所在节首地址加上偏移量就可以定位到引用符号的地址了。<br>图5-6是helloout.asm中一些重定位结果，其中红框所圈的就是相对地址的重定位，绿框所圈的是绝对地址的重定位。</p>
 <p>图5-6 部分重定位结果展示</p>
-<h3 id="5-6-hello的执行流程"><a href="#5-6-hello的执行流程" class="headerlink" title="5.6 hello的执行流程"></a>5.6 hello的执行流程</h3><pre><code>下面列出了hello从开始到结束整个过程中依次调用的函数，以及它们的地址。
-</code></pre><p>函数名|函数地址</p>
+<h3 id="5-6-hello的执行流程"><a href="#5-6-hello的执行流程" class="headerlink" title="5.6 hello的执行流程"></a>5.6 hello的执行流程</h3><p>下面列出了hello从开始到结束整个过程中依次调用的函数，以及它们的地址。<br>函数名|函数地址</p>
 <table>
 <thead>
 <tr>
@@ -498,10 +527,9 @@
 <h2 id="第6章-hello进程管理"><a href="#第6章-hello进程管理" class="headerlink" title="第6章 hello进程管理"></a>第6章 hello进程管理</h2><h3 id="6-1-进程的概念与作用"><a href="#6-1-进程的概念与作用" class="headerlink" title="6.1 进程的概念与作用"></a>6.1 进程的概念与作用</h3><h4 id="6-1-1概念"><a href="#6-1-1概念" class="headerlink" title="6.1.1概念"></a>6.1.1概念</h4><p>进程即一个执行中程序的实例。</p>
 <h4 id="6-1-2作用"><a href="#6-1-2作用" class="headerlink" title="6.1.2作用"></a>6.1.2作用</h4><p>进程概念的抽象给我们一种假象，似乎我们的程序是系统当前唯一运行的程序一样。我们的程序像是独占地使用处理器和内存。处理器就好像是无间断地一条接一条地执行我们程序中的指令。最后，我们程序中的代码和数据好像是系统内存中唯一存在的对象。</p>
 <h3 id="6-2-简述壳Shell-bash的作用与处理流程"><a href="#6-2-简述壳Shell-bash的作用与处理流程" class="headerlink" title="6.2 简述壳Shell-bash的作用与处理流程"></a>6.2 简述壳Shell-bash的作用与处理流程</h3><p>Shell字面理解就是个“壳”，是操作系统（内核）与用户之间的桥梁，充当命令解释器的作用，将用户输入的命令翻译给系统执行。<br>处理流程如下：（1）读取用户由键盘输入的命令行。<br>（2）分析命令，以命令名作为文件名，并将其它参数改造为系统调用execve( )内部处理所要求的形式。<br>（3）终端进程调用fork( )建立一个子进程。<br>（4）终端进程本身调用wait()来等待子进程完成（如果是后台命令，则不等待）。当子进程运行时调用execve()，子进程根据文件名到目录中查找有关文件，调入内存，执行这个程序。<br>（5）如果命令末尾有&amp;,则终端进程不用执行系统调用wait()，立即发提示符，让用户入下一条命令；否则终端进程会一直等待，当子进程完成工作后，向父进程报告，此时中断进程醒来，作必要的判别工作后，终端发出命令提示符，重复上述处理过程。</p>
-<h3 id="6-3-Hello的fork进程创建过程"><a href="#6-3-Hello的fork进程创建过程" class="headerlink" title="6.3 Hello的fork进程创建过程"></a>6.3 Hello的fork进程创建过程</h3><pre><code>在终端中输入./hello 1170300629 shizhimin，命令输入完成后就都是shell的工作了。首先，shell会解析命令，准备好加载函数execve的各个参数。然后在当前进程下利用fork函数创建一个子进程，这是父进程的一个复制。子进程得到与父进程用户级虚拟地址空间相同的（但是独立的）一份副本，这就意味着，当父进程调用fork时，子进程可以读写父进程中打开的任何文件。父进程与子进程之间最大的区别在于它们拥有不同的PID。到此为止，hello的进程就创建完毕了。
-</code></pre><h3 id="6-4-Hello的execve过程"><a href="#6-4-Hello的execve过程" class="headerlink" title="6.4 Hello的execve过程"></a>6.4 Hello的execve过程</h3><p>上面说到hello的进程已经创建好。在创建好的进程下，子进程利用之前准备好的参数调用execve函数。这个函数会删除子进程现有的虚拟内存段，并创建一组新的代码、数据、堆和栈段。新的堆和栈段被初始化为零。通过将虚拟地址空间中的页映射到可执行文件的页大小的片，新的代码和数据段被初始化为可执行文件的内容。最后，execve跳转到_start地址，它最终调用hello的main函数。除了一些头部信息，在加载过程中没有任何从磁盘到内存的数据复制。直到CPU引用一个被映射的虚拟页时才会进行复制，这时，操作系统利用它的页面调度机制自动将页面从磁盘传送到内存。</p>
-<h3 id="6-5-Hello的进程执行"><a href="#6-5-Hello的进程执行" class="headerlink" title="6.5 Hello的进程执行"></a>6.5 Hello的进程执行</h3><pre><code>自从fork为hello创建新的进程之后，在没有任何异常的情况下，hello都是老老实实的一条一条地执行着它代码段中的指令。当遇到任何异常时候，hello都会陷入内核模式，交由内核处理异常，内核处理完毕后，或许会将控制流返回给hello，或者不会，这依赖于异常的类型。整个异常处理的过程涉及模式切换、上下文切换、信号收发等。下面我们详细介绍一下hello执行sleep时的进程调用情况。
-</code></pre><p>首先hello运行到sleep函数处，sleep是一个系统函数，通过一条称为syscall的陷阱指令来提供的。通过这条指令，sleep显式的请求让进程hello休眠2秒钟。系统调用以后，进入内核模式，内核进行上下文切换，保存当前进程的上下文，恢复某个先前被抢占的进程被保存的上下文，最后将控制传递给这个新恢复的进程。完成上下文切换后，又进入用户模式，执行其他进程。当2秒钟到达后，定时器会产生一个中断信号，当前进程（其他进程）检测到这个信号后，进行异常处理，陷入内核模式，内核模式处理异常，再次进行上下文切换，将控制返回给hello。至此，一个sleep结束，之后的sleep不断重复这样的过程。过程图解见图6-1。</p>
+<h3 id="6-3-Hello的fork进程创建过程"><a href="#6-3-Hello的fork进程创建过程" class="headerlink" title="6.3 Hello的fork进程创建过程"></a>6.3 Hello的fork进程创建过程</h3><p>在终端中输入./hello 1170300629 shizhimin，命令输入完成后就都是shell的工作了。首先，shell会解析命令，准备好加载函数execve的各个参数。然后在当前进程下利用fork函数创建一个子进程，这是父进程的一个复制。子进程得到与父进程用户级虚拟地址空间相同的（但是独立的）一份副本，这就意味着，当父进程调用fork时，子进程可以读写父进程中打开的任何文件。父进程与子进程之间最大的区别在于它们拥有不同的PID。到此为止，hello的进程就创建完毕了。</p>
+<h3 id="6-4-Hello的execve过程"><a href="#6-4-Hello的execve过程" class="headerlink" title="6.4 Hello的execve过程"></a>6.4 Hello的execve过程</h3><p>上面说到hello的进程已经创建好。在创建好的进程下，子进程利用之前准备好的参数调用execve函数。这个函数会删除子进程现有的虚拟内存段，并创建一组新的代码、数据、堆和栈段。新的堆和栈段被初始化为零。通过将虚拟地址空间中的页映射到可执行文件的页大小的片，新的代码和数据段被初始化为可执行文件的内容。最后，execve跳转到_start地址，它最终调用hello的main函数。除了一些头部信息，在加载过程中没有任何从磁盘到内存的数据复制。直到CPU引用一个被映射的虚拟页时才会进行复制，这时，操作系统利用它的页面调度机制自动将页面从磁盘传送到内存。</p>
+<h3 id="6-5-Hello的进程执行"><a href="#6-5-Hello的进程执行" class="headerlink" title="6.5 Hello的进程执行"></a>6.5 Hello的进程执行</h3><p>自从fork为hello创建新的进程之后，在没有任何异常的情况下，hello都是老老实实的一条一条地执行着它代码段中的指令。当遇到任何异常时候，hello都会陷入内核模式，交由内核处理异常，内核处理完毕后，或许会将控制流返回给hello，或者不会，这依赖于异常的类型。整个异常处理的过程涉及模式切换、上下文切换、信号收发等。下面我们详细介绍一下hello执行sleep时的进程调用情况。<br>首先hello运行到sleep函数处，sleep是一个系统函数，通过一条称为syscall的陷阱指令来提供的。通过这条指令，sleep显式的请求让进程hello休眠2秒钟。系统调用以后，进入内核模式，内核进行上下文切换，保存当前进程的上下文，恢复某个先前被抢占的进程被保存的上下文，最后将控制传递给这个新恢复的进程。完成上下文切换后，又进入用户模式，执行其他进程。当2秒钟到达后，定时器会产生一个中断信号，当前进程（其他进程）检测到这个信号后，进行异常处理，陷入内核模式，内核模式处理异常，再次进行上下文切换，将控制返回给hello。至此，一个sleep结束，之后的sleep不断重复这样的过程。过程图解见图6-1。</p>
 <p>图6-1 hello调用sleep时的进程执行情况</p>
 <h3 id="6-6-hello的异常与信号处理"><a href="#6-6-hello的异常与信号处理" class="headerlink" title="6.6 hello的异常与信号处理"></a>6.6 hello的异常与信号处理</h3><p>在这里我手动模拟了四种情况，下面分别是四种情况的分析。<br>（1）正常结束。如图6-2（a），是正常执行hello程序的结果，当程序执行完成之后，我们通过ps命令可以看到hello的进程已经消失，说明hello确实结束了。<br>（2）键入ctrl-z。如图6-2（b），是在程序输出4条Hello 1170300629 szm之后按下ctrl-z的结果，当按下ctrl-z之后，shell父进程收到SIGSTP信号，信号处理函数的逻辑是打印屏幕回显、将hello进程挂起，通过ps命令我们可以看出hello进程没有被回收，此时它的后台job号是1，调用fg 1将其调到前台，此时shell程序首先打印hello的命令行命令，hello继续运行打印剩下的6条Hello 1170300629 szm，之后输入字串，程序结束。这时我们再输入ps命令可以看到hello进程确实是结束了。<br>（3）键入ctrl-c。如图6-2（c），是在程序输出5条Hello 1170300629 szm之后按下ctrl-c的结果，当按下ctrl-c之后，shell父进程收到SIGINT信号，信号处理函数的逻辑是结束hello，并回收hello进程。通过ps命令可以看到hello的进程已经消失，说明hello已经结束了。<br>（4）中途乱按。如图6-2（d），是在程序运行中途乱按的结果，可以发现，乱按只是将屏幕的输入缓存到stdin，当getchar的时候读出一个’\n’结尾的字串（作为一次输入），其他字串会当做shell命令行输入。</p>
 <p>图6-2（a） hello正常结束</p>
@@ -570,7 +598,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年12月30日 15:46</p>
+        <p>最后更新： 2018年12月30日 15:49</p>
         <p>原始链接： <a class="post-url" href="/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/" title="程序人生-Hello’s P2P">https://Est-C.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/</a></p>
         <footer>
             <a href="https://Est-C.coding.me/Est-C.coding.me">
