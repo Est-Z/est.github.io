@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Est">
 <meta property="og:description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-30T07:35:33.860Z">
+<meta property="og:updated_time" content="2018-12-30T07:37:34.640Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序人生-Hello’s P2P">
 <meta name="twitter:description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
@@ -149,7 +149,7 @@
 <h2 id="第1章-概述"><a href="#第1章-概述" class="headerlink" title="第1章 概述"></a>第1章 概述</h2><h3 id="1-1-Hello简介"><a href="#1-1-Hello简介" class="headerlink" title="1.1 Hello简介"></a>1.1 Hello简介</h3><p>首先我们利用一个IDE编写生成了hello.c，这样hello就诞生了，但现在只是我们知道要让它做什么，硬件并不知道，我们要将它转换成可执行程序。hello.c要经过预处理、编译、汇编、链接这样几个看起来很简洁其实很繁复的过程为一个可执行文件hello，这样hello就从一个program变成了process，完成了P2P的过程。之后我们在shell中输入对应的执行指令，shell调用fork为其创建进程，调用execve为其加载，hello拥有了自己的进程，然后存储管理系统为它读取数据、IO设备为它实现外部交互、内核为其处理种种异常，hello有条不紊的完成了它的所有指令，最后被shell结束，默默走完了它的一生，不留下一丝踪影，只有CS知道它来过。这就是hello从无到无的O2O过程。</p>
 <h3 id="1-2-环境与工具"><a href="#1-2-环境与工具" class="headerlink" title="1.2 环境与工具"></a>1.2 环境与工具</h3><p>硬件环境：AMD FX-7500 Radeon R7,10 Computer Cores 4G+6G<br>软件环境：Ubuntu16.04.1 LTS<br>开发与调试工具：gedit，gcc，as，ld，edb，readelf</p>
 <h3 id="1-3-中间结果"><a href="#1-3-中间结果" class="headerlink" title="1.3 中间结果"></a>1.3 中间结果</h3><p>文件名<br>内容</p>
-<p>|:—-:|:——-:|<br>|hello.i|hello.c经过预处理之后生成的文件|<br>|hello.s|hello.i经过编译之后生成的汇编代码文件|<br>|hello.o|hello.s经过汇编之后生成的可重定位文件|<br>|hello|hello.o经过链接之后生成的可执行文件|<br>|hello.elf|hello.o的ELF格式|<br>|helloout.elf|hello的ELF格式|<br>|helloout.asm|hello反汇编生成的代码|<br>|hello.asm|hello.o反汇编生成的代码|</p>
+<p>| :—-: | :——-: |<br>| hello.i | hello.c经过预处理之后生成的文件 |<br>| hello.s | hello.i经过编译之后生成的汇编代码文件 |<br>| hello.o | hello.s经过汇编之后生成的可重定位文件 |<br>| hello | hello.o经过链接之后生成的可执行文件 |<br>| hello.elf | hello.o的ELF格式 |<br>| helloout.elf | hello的ELF格式 |<br>| helloout.asm | hello反汇编生成的代码 |<br>| hello.asm | hello.o反汇编生成的代码 |</p>
 <h3 id="1-4-本章小结"><a href="#1-4-本章小结" class="headerlink" title="1.4 本章小结"></a>1.4 本章小结</h3><p>介绍一些基本的东西，接下来我们就要解剖hello运行的整个过程了。</p>
 <h2 id="第2章-预处理"><a href="#第2章-预处理" class="headerlink" title="第2章 预处理"></a>第2章 预处理</h2><h3 id="2-1-预处理的概念与作用"><a href="#2-1-预处理的概念与作用" class="headerlink" title="2.1 预处理的概念与作用"></a>2.1 预处理的概念与作用</h3><h4 id="2-1-1概念"><a href="#2-1-1概念" class="headerlink" title="2.1.1概念"></a>2.1.1概念</h4><p>顾名思义，预处理就是在程序编译之前的处理。主要有三方面的内容，包括：宏定义、文件包含、条件编译。<br>宏定义：将#define标识的变量和函数进行替换。<br>文件包含：将#include标识的头文件调用出来。头文件通常用.h作为扩展名。对头文件也要预处理，也就是说头文件的宏定义、文件包含、条件编译也要就行处理，这样层层嵌套不断扩大。所以我们预处理得到的文件大小可能是源文件大小的数倍。<br>条件编译：通过一些特定符号（例如：#ifdef、#else、#endif）来处理条件分支语句，使其部分程序段在条件满足时再编译。</p>
 <h4 id="2-1-2作用"><a href="#2-1-2作用" class="headerlink" title="2.1.2作用"></a>2.1.2作用</h4><p>预处理其作为源文件进入编译环节之前的重要操作，最主要的作用无疑就是方便编译器更好的执行编译功能。</p>
@@ -404,7 +404,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年12月30日 15:35</p>
+        <p>最后更新： 2018年12月30日 15:37</p>
         <p>原始链接： <a class="post-url" href="/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/" title="程序人生-Hello’s P2P">https://Est-C.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/</a></p>
         <footer>
             <a href="https://Est-C.coding.me/Est-C.coding.me">
