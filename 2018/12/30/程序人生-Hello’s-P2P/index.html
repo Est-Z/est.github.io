@@ -8,17 +8,17 @@
   
     <meta name="keywords" content="Est,Est's Blog" />
   
-  <meta name="description" content="摘  要hello.c是我们每个程序员的初恋。但是它究竟是怎么过完它的一生的，你是否知道？恐怕很难说得清楚吧。本文对从hello.c的诞生，历经预处理、编译、汇编、链接生成可执行文件，再到shell解析命令、fork为其创建进程、execve为其加载、内核为其处理异常、存储管理为其读取数据、IO管理为其显示结果，最后被shell回收完美谢幕的整个过程每一步都进行了详细的说明分析，将整个hello的">
+  <meta name="description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
 <meta property="og:type" content="article">
 <meta property="og:title" content="程序人生-Hello’s P2P">
 <meta property="og:url" content="https://Est-C.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/index.html">
 <meta property="og:site_name" content="Est">
-<meta property="og:description" content="摘  要hello.c是我们每个程序员的初恋。但是它究竟是怎么过完它的一生的，你是否知道？恐怕很难说得清楚吧。本文对从hello.c的诞生，历经预处理、编译、汇编、链接生成可执行文件，再到shell解析命令、fork为其创建进程、execve为其加载、内核为其处理异常、存储管理为其读取数据、IO管理为其显示结果，最后被shell回收完美谢幕的整个过程每一步都进行了详细的说明分析，将整个hello的">
+<meta property="og:description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-30T06:56:45.122Z">
+<meta property="og:updated_time" content="2018-12-30T07:16:53.059Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序人生-Hello’s P2P">
-<meta name="twitter:description" content="摘  要hello.c是我们每个程序员的初恋。但是它究竟是怎么过完它的一生的，你是否知道？恐怕很难说得清楚吧。本文对从hello.c的诞生，历经预处理、编译、汇编、链接生成可执行文件，再到shell解析命令、fork为其创建进程、execve为其加载、内核为其处理异常、存储管理为其读取数据、IO管理为其显示结果，最后被shell回收完美谢幕的整个过程每一步都进行了详细的说明分析，将整个hello的">
+<meta name="twitter:description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
   
   
     <link rel="icon" href="/favicon.ico">
@@ -143,7 +143,8 @@
     <div class="article-entry post-content" itemprop="articleBody">
       
             
-            <p>摘  要<br>hello.c是我们每个程序员的初恋。但是它究竟是怎么过完它的一生的，你是否知道？恐怕很难说得清楚吧。本文对从hello.c的诞生，历经预处理、编译、汇编、链接生成可执行文件，再到shell解析命令、fork为其创建进程、execve为其加载、内核为其处理异常、存储管理为其读取数据、IO管理为其显示结果，最后被shell回收完美谢幕的整个过程每一步都进行了详细的说明分析，将整个hello的时候活灵活现地展示于大家面前。</p>
+            <p>哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏<br><a id="more"></a></p>
+<p>摘  要<br>hello.c是我们每个程序员的初恋。但是它究竟是怎么过完它的一生的，你是否知道？恐怕很难说得清楚吧。本文对从hello.c的诞生，历经预处理、编译、汇编、链接生成可执行文件，再到shell解析命令、fork为其创建进程、execve为其加载、内核为其处理异常、存储管理为其读取数据、IO管理为其显示结果，最后被shell回收完美谢幕的整个过程每一步都进行了详细的说明分析，将整个hello的时候活灵活现地展示于大家面前。</p>
 <p>关键词：预处理、编译、汇编、链接、存储管理、IO设备、进程管理、异常处理</p>
 <p>（摘要0分，缺失-1分，根据内容精彩称都酌情加分0-1分）</p>
 <h2 id="第1章-概述"><a href="#第1章-概述" class="headerlink" title="第1章 概述"></a>第1章 概述</h2><h3 id="1-1-Hello简介"><a href="#1-1-Hello简介" class="headerlink" title="1.1 Hello简介"></a>1.1 Hello简介</h3><p>首先我们利用一个IDE编写生成了hello.c，这样hello就诞生了，但现在只是我们知道要让它做什么，硬件并不知道，我们要将它转换成可执行程序。hello.c要经过预处理、编译、汇编、链接这样几个看起来很简洁其实很繁复的过程为一个可执行文件hello，这样hello就从一个program变成了process，完成了P2P的过程。之后我们在shell中输入对应的执行指令，shell调用fork为其创建进程，调用execve为其加载，hello拥有了自己的进程，然后存储管理系统为它读取数据、IO设备为它实现外部交互、内核为其处理种种异常，hello有条不紊的完成了它的所有指令，最后被shell结束，默默走完了它的一生，不留下一丝踪影，只有CS知道它来过。这就是hello从无到无的O2O过程。</p>
@@ -214,8 +215,92 @@
 <h4 id="5-5-2绝对地址的重定位"><a href="#5-5-2绝对地址的重定位" class="headerlink" title="5.5.2绝对地址的重定位"></a>5.5.2绝对地址的重定位</h4><p>相较于基于相对地址的重定位，绝对地址的重定位就简单一些了。通过符号所在节首地址加上偏移量就可以定位到引用符号的地址了。<br>图5-6是helloout.asm中一些重定位结果，其中红框所圈的就是相对地址的重定位，绿框所圈的是绝对地址的重定位。</p>
 <p>图5-6 部分重定位结果展示</p>
 <h3 id="5-6-hello的执行流程"><a href="#5-6-hello的执行流程" class="headerlink" title="5.6 hello的执行流程"></a>5.6 hello的执行流程</h3><pre><code>下面列出了hello从开始到结束整个过程中依次调用的函数，以及它们的地址。
-</code></pre><p>函数名<br>函数地址<br>ld-2.23.so!_dl_start<br>0x00007fc7843379b0<br>ld-2.23.so!_dl_init<br>0x00007fc784346740<br>hello!_start<br>0x00000000004004d0<br>libc-2.23.so!<strong>libc_start_main<br>0x00007fc783f86740<br>-libc-2.23.so!</strong>cxa_atexit<br>0x00007fc783fa0280<br>-libc-2.23.so!<strong>libc_csu_init<br>0x0000000000400580<br>hello!_init<br>0x0000000000400430<br>libc-2.23.so!_setjmp<br>0x00007fc783f9b250<br>-libc-2.23.so!_sigsetjmp<br>0x00007fc783f9b1b0<br>-libc-2.23.so!</strong>sigjmp_save<br>0x00007fc783f9b210<br>hello!main<br>0x0000000000400523<br>hello!puts@plt<br>0x0000000000400460<br>hello!exit@plt<br>0x00000000004004a0<br><em>hello!printf@plt<br>0x0000000000400470
-</em>hello!sleep@plt<br>0x00000000004004b0<br>*hello!getchar@plt<br>0x0000000000400490<br>-ld-2.23.so!_dl_fixup<br>0x00007fc7843459f0<br>–ld-2.23.so!_dl_lookup_symbol_x<br>0x00007fc7843409d0<br>libc-2.23.so!_exit<br>0x00007fc7843515b0</p>
+</code></pre><table>
+<thead>
+<tr>
+<th>函数名</th>
+<th style="text-align:right">函数地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>ld-2.23.so!_dl_start</td>
+<td style="text-align:right">0x00007fc7843379b0</td>
+</tr>
+<tr>
+<td>ld-2.23.so!_dl_init</td>
+<td style="text-align:right">0x00007fc784346740</td>
+</tr>
+<tr>
+<td>hello!_start</td>
+<td style="text-align:right">0x00000000004004d0</td>
+</tr>
+<tr>
+<td>libc-2.23.so!__libc_start_main</td>
+<td style="text-align:right">0x00007fc783f86740</td>
+</tr>
+<tr>
+<td>-libc-2.23.so!__cxa_atexit</td>
+<td style="text-align:right">0x00007fc783fa0280</td>
+</tr>
+<tr>
+<td>-libc-2.23.so!__libc_csu_init</td>
+<td style="text-align:right">0x0000000000400580</td>
+</tr>
+<tr>
+<td>hello!_init</td>
+<td style="text-align:right">0x0000000000400430</td>
+</tr>
+<tr>
+<td>libc-2.23.so!_setjmp</td>
+<td style="text-align:right">0x00007fc783f9b250</td>
+</tr>
+<tr>
+<td>-libc-2.23.so!_sigsetjmp</td>
+<td style="text-align:right">0x00007fc783f9b1b0</td>
+</tr>
+<tr>
+<td>-libc-2.23.so!__sigjmp_save</td>
+<td style="text-align:right">0x00007fc783f9b210</td>
+</tr>
+<tr>
+<td>hello!main</td>
+<td style="text-align:right">0x0000000000400523</td>
+</tr>
+<tr>
+<td>hello!puts@plt</td>
+<td style="text-align:right">0x0000000000400460</td>
+</tr>
+<tr>
+<td>hello!exit@plt</td>
+<td style="text-align:right">0x00000000004004a0</td>
+</tr>
+<tr>
+<td>*hello!printf@plt</td>
+<td style="text-align:right">0x0000000000400470</td>
+</tr>
+<tr>
+<td>*hello!sleep@plt</td>
+<td style="text-align:right">0x00000000004004b0</td>
+</tr>
+<tr>
+<td>*hello!getchar@plt</td>
+<td style="text-align:right">0x0000000000400490</td>
+</tr>
+<tr>
+<td>-ld-2.23.so!_dl_fixup</td>
+<td style="text-align:right">0x00007fc7843459f0</td>
+</tr>
+<tr>
+<td>–ld-2.23.so!_dl_lookup_symbol_x</td>
+<td style="text-align:right">0x00007fc7843409d0</td>
+</tr>
+<tr>
+<td>libc-2.23.so!_exit</td>
+<td style="text-align:right">0x00007fc7843515b0</td>
+</tr>
+</tbody>
+</table>
 <h3 id="5-7-Hello的动态链接分析"><a href="#5-7-Hello的动态链接分析" class="headerlink" title="5.7 Hello的动态链接分析"></a>5.7 Hello的动态链接分析</h3><p>动态链接依赖于位置无关函数PIC。PIC函数的代码可以直接加载无需重定位。动态链接过程主要就是实现PIC的数据引用和PIC的函数调用。<br>PIC数据引用通过一个全局偏移量表（GOT），它位于数据段的开始，如图5-7所示。在GOT中，每个被目标代码所引用的全局数据目标（过程或全局变量）都有一个八字节条目。编译器会为每个条目都生成一个重定位记录。在加载时，动态链接器会重定位GOT中的每个条目，使得他们包含正确的绝对地址。<br>PIC函数调用采用一个延迟绑定的策略，GNU编译器将过程地址的绑定推迟到第一次调用该过程时。延迟绑定是通过两个数据结构之间的交互实现的，这两个数据结构是：GOT和过程链接表（PLT）。如果一个目标模块调用定义在共享库中的任何函数，那么他就有自己的GOT和PLT。GOT是数据段的一部分，而PLT是代码段的一部分。PLT是一个数组，其中每个条目是16字节代码（如图5-8）。</p>
 <p>图5-7 hello在dl_init运行前后的GOT对比<br>通过图5-7中在dl_init运行前后GOT的对比，我们可以看出来动态链接的过程。再结合图5-8我们就能看出函数调用的一些现象。</p>
 <p>图5-8 hello的PLT展示</p>
@@ -272,7 +357,11 @@
 <h2 id="第8章-hello的IO管理"><a href="#第8章-hello的IO管理" class="headerlink" title="第8章 hello的IO管理"></a>第8章 hello的IO管理</h2><h3 id="8-1-Linux的IO设备管理方法"><a href="#8-1-Linux的IO设备管理方法" class="headerlink" title="8.1 Linux的IO设备管理方法"></a>8.1 Linux的IO设备管理方法</h3><p>设备的模型化：所有的IO设备都被模型化为文件，而所有的输入和输出都被当做对相应文件的读和写来执行，这种将设备优雅地映射为文件的方式，允许Linux内核引出一个简单低级的应用接口，称为Unix I/O。</p>
 <h3 id="8-2-简述Unix-IO接口及其函数"><a href="#8-2-简述Unix-IO接口及其函数" class="headerlink" title="8.2 简述Unix IO接口及其函数"></a>8.2 简述Unix IO接口及其函数</h3><h4 id="8-2-1Unix-I-O接口统一操作"><a href="#8-2-1Unix-I-O接口统一操作" class="headerlink" title="8.2.1Unix I/O接口统一操作"></a>8.2.1Unix I/O接口统一操作</h4><p>（1）打开文件。一个应用程序通过要求内核打开相应的文件，来宣告它想要访问一个I/O设备，内核返回一个小的非负整数，叫做描述符，它在后续对此文件的所有操作中标识这个文件，内核记录有关这个打开文件的所有信息。<br>（2）Shell创建的每个进程都有三个打开的文件：标准输入，标准输出，标准错误。<br>（3）改变当前的文件位置：对于每个打开的文件，内核保持着一个文件位置k，初始为0，这个文件位置是从文件开头起始的字节偏移量，应用程序能够通过执行seek，显式地将改变当前文件位置k。<br>（4）读写文件：一个读操作就是从文件复制n&gt;0个字节到内存，从当前文件位置k开始，然后将k增加到k+n，给定一个大小为m字节的而文件，当k&gt;=m时，触发EOF。类似一个写操作就是从内存中复制n&gt;0个字节到一个文件，从当前文件位置k开始，然后更新k。<br>（5）关闭文件，内核释放文件打开时创建的数据结构，并将这个描述符恢复到可用的描述符池中去。</p>
 <h4 id="8-2-2-Unix-I-O函数"><a href="#8-2-2-Unix-I-O函数" class="headerlink" title="8.2.2 Unix I/O函数"></a>8.2.2 Unix I/O函数</h4><p>int open(char<em> filename,int flags,mode_t mode) ，进程通过调用open函数来打开一个存在的文件或是创建一个新文件的。open函数将filename转换为一个文件描述符，并且返回描述符数字，返回的描述符总是在进程中当前没有打开的最小描述符，flags参数指明了进程打算如何访问这个文件，mode参数指定了新文件的访问权限位。<br>int close(fd)，fd是需要关闭的文件的描述符，close返回操作结果。<br>ssize_t read(int fd,void </em>buf,size_t n)，read函数从描述符为fd的当前文件位置赋值最多n个字节到内存位置buf。返回值-1表示一个错误，0表示EOF，否则返回值表示的是实际传送的字节数量。<br>ssize_t wirte(int fd,const void *buf,size_t n)，write函数从内存位置buf复制至多n个字节到描述符为fd的当前文件。</p>
-<h3 id="8-3-printf的实现分析"><a href="#8-3-printf的实现分析" class="headerlink" title="8.3 printf的实现分析"></a>8.3 printf的实现分析</h3><p>我们首先查看一下printf的代码 ：<br>int printf(const char <em>fmt,…)<br>{<br>    int i；<br>    char buf[265];<br>    va_list arg = (va_list)((char</em>)(&amp;fmt)+4);<br>    i = vsprintf(buf,fmt,arg);<br>    write(buf,i);<br>    return i;<br>}<br>首先我们来看这一句va_list arg = (va_list)((char<em>)(&amp;fmt) + 4)；va_list的定义： typedef char </em>va_list ，这说明它是一个字符指针。其中的： (char<em>)(&amp;fmt) + 4) 表示的是…中的第一个参数。下面我们来看看下一句：i = vsprintf(buf, fmt, arg); 让我们来看看vsprintf(buf, fmt, arg)是什么函数。<br>int vsprintf(char </em>buf, const char <em>fmt, va_list args)<br>   {<br>    char</em> p;<br>    char tmp[256];<br>    va_list p_next_arg = args;<br>    for (p=buf;<em>fmt;fmt++) {<br>    if (</em>fmt != ‘%’) {<br>    <em>p++ = </em>fmt;<br>    continue;<br>    }<br>    fmt++;<br>    switch (<em>fmt) {<br>    case ‘x’:<br>    itoa(tmp, </em>((int<em>)p_next_arg));<br>    strcpy(p, tmp);<br>    p_next_arg += 4;<br>    p += strlen(tmp);<br>    break;<br>    case ‘s’:<br>    break;<br>    default:<br>    break;<br>    }<br>    }<br>    return (p - buf);<br>   }<br>我们先不看它的具体内容。我们继续分析printf，它接受一个格式化的命令，并把指定的匹配的参数格式化输出。通过看vsprintf我们可以发现，它返回要打印出来的字符串的长度。接下来是write(buf, i);的实现就有点复杂了，我们先看看write。<br> write:<br>mov eax, _NR_write<br>mov ebx, [esp + 4]<br>mov ecx, [esp + 8]<br>int INT_VECTOR_SYS_CALL<br>这里是给几个寄存器传递了几个参数，然后一个int结束。这里的int INT_VECTOR_SYS_CALL 是通过系统来调用sys_call这个函数。<br>sys_call:<br>     call save<br>     push dword [p_proc_ready]<br>     sti<br>     push ecx<br>     push ebx<br>     call [sys_call_table + eax </em> 4]<br>     add esp, 4 * 3<br>     mov [esi + EAXREG - P_STACKBASE], eax<br>     cli<br>     ret<br>sys_call将字符串中的字节“Hello 1170300629 szm”从寄存器中通过总线复制到显卡的显存中，显存中存储的是字符的ASCII码。字符显示驱动子程序将通过ASCII码在字模库中找到点阵信息将点阵信息存储到vram中。显示芯片会按照一定的刷新频率逐行读取vram，并通过信号线向液晶显示器传输每一个点（RGB分量）。于是我们的打印字符串“Hello 1170300629 szm”就显示在了屏幕上。</p>
+<h3 id="8-3-printf的实现分析"><a href="#8-3-printf的实现分析" class="headerlink" title="8.3 printf的实现分析"></a>8.3 printf的实现分析</h3><p>我们首先查看一下printf的代码 ：<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">int <span class="built_in">printf</span>(const char *fmt,…)</span><br><span class="line">&#123;</span><br><span class="line">	int i；</span><br><span class="line">	char buf[265];</span><br><span class="line">	va_list arg = (va_list)((char*)(&amp;fmt)+4);</span><br><span class="line">	i = vsprintf(buf,fmt,arg);</span><br><span class="line">	write(buf,i);</span><br><span class="line">	<span class="built_in">return</span> i;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>首先我们来看这一句va_list arg = (va_list)((char<em>)(&amp;fmt) + 4)；va_list的定义： typedef char </em>va_list ，这说明它是一个字符指针。其中的： (char*)(&amp;fmt) + 4) 表示的是…中的第一个参数。下面我们来看看下一句：i = vsprintf(buf, fmt, arg); 让我们来看看vsprintf(buf, fmt, arg)是什么函数。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">int vsprintf(char *buf, const char *fmt, va_list args) </span><br><span class="line">   &#123; </span><br><span class="line">    char* p; </span><br><span class="line">    char tmp[256]; </span><br><span class="line">    va_list p_next_arg = args; </span><br><span class="line">    <span class="keyword">for</span> (p=buf;*fmt;fmt++) &#123; </span><br><span class="line">    <span class="keyword">if</span> (*fmt != <span class="string">'%'</span>) &#123; </span><br><span class="line">    *p++ = *fmt; </span><br><span class="line">    <span class="built_in">continue</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    fmt++; </span><br><span class="line">    switch (*fmt) &#123; </span><br><span class="line">    <span class="keyword">case</span> <span class="string">'x'</span>: </span><br><span class="line">    itoa(tmp, *((int*)p_next_arg)); </span><br><span class="line">    strcpy(p, tmp); </span><br><span class="line">    p_next_arg += 4; </span><br><span class="line">    p += strlen(tmp); </span><br><span class="line">    <span class="built_in">break</span>; </span><br><span class="line">    <span class="keyword">case</span> <span class="string">'s'</span>: </span><br><span class="line">    <span class="built_in">break</span>; </span><br><span class="line">    default: </span><br><span class="line">    <span class="built_in">break</span>; </span><br><span class="line">    &#125; </span><br><span class="line">    &#125; </span><br><span class="line">    <span class="built_in">return</span> (p - buf); </span><br><span class="line">   &#125;</span><br></pre></td></tr></table></figure></p>
+<p>我们先不看它的具体内容。我们继续分析printf，它接受一个格式化的命令，并把指定的匹配的参数格式化输出。通过看vsprintf我们可以发现，它返回要打印出来的字符串的长度。接下来是write(buf, i);的实现就有点复杂了，我们先看看write。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"> write: </span><br><span class="line">mov eax, _NR_write</span><br><span class="line">mov ebx, [esp + 4]</span><br><span class="line">mov ecx, [esp + 8] </span><br><span class="line">int INT_VECTOR_SYS_CALL</span><br></pre></td></tr></table></figure></p>
+<p>这里是给几个寄存器传递了几个参数，然后一个int结束。这里的int INT_VECTOR_SYS_CALL 是通过系统来调用sys_call这个函数。<br><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">sys_call: </span><br><span class="line">     call save </span><br><span class="line">     push dword [p_proc_ready] </span><br><span class="line">     sti </span><br><span class="line">     push ecx </span><br><span class="line">     push ebx </span><br><span class="line">     call [sys_call_table + eax * 4] </span><br><span class="line">     add esp, 4 * 3 </span><br><span class="line">     mov [esi + EAXREG - P_STACKBASE], eax </span><br><span class="line">     cli </span><br><span class="line">     ret</span><br></pre></td></tr></table></figure></p>
+<p>sys_call将字符串中的字节“Hello 1170300629 szm”从寄存器中通过总线复制到显卡的显存中，显存中存储的是字符的ASCII码。字符显示驱动子程序将通过ASCII码在字模库中找到点阵信息将点阵信息存储到vram中。显示芯片会按照一定的刷新频率逐行读取vram，并通过信号线向液晶显示器传输每一个点（RGB分量）。于是我们的打印字符串“Hello 1170300629 szm”就显示在了屏幕上。</p>
 <h3 id="8-4-getchar的实现分析"><a href="#8-4-getchar的实现分析" class="headerlink" title="8.4 getchar的实现分析"></a>8.4 getchar的实现分析</h3><p>异步异常-键盘中断的处理：用户按键之后，键盘接口会得到按键扫描码，同时产生一个中断信号，之后当前程序陷入内核模式，处理该中断。具体就是接受按键扫描码转成ascii码，保存到系统的键盘缓冲区。然后程序继续执行到getchar之后，getchar调用read系统函数，通过系统调用读取按键ascii码，直到接受到回车键才返回。</p>
 <h3 id="8-5本章小结"><a href="#8-5本章小结" class="headerlink" title="8.5本章小结"></a>8.5本章小结</h3><p>本章我们看了一看hello是如何与用户进行交互的。熟悉了Linux的IO设备管理方法、Unix IO接口及其函数，分析了printf函数和getchar函数。</p>
 <p>（第8章1分）</p>
@@ -295,7 +384,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年12月30日 14:56</p>
+        <p>最后更新： 2018年12月30日 15:16</p>
         <p>原始链接： <a class="post-url" href="/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/" title="程序人生-Hello’s P2P">https://Est-C.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/</a></p>
         <footer>
             <a href="https://Est-C.coding.me/Est-C.coding.me">
@@ -363,7 +452,7 @@
             </a>
           </li>
           <li>
-            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://Est-C.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/&title=《程序人生-Hello’s P2P》 — Est&source=一个专注划水的博客" data-title="QQ">
+            <a class="qq share-sns" target="_blank" href="http://connect.qq.com/widget/shareqq/index.html?url=https://Est-C.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/&title=《程序人生-Hello’s P2P》 — Est&source=哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏" data-title="QQ">
               <i class="fa fa-qq"></i>
             </a>
           </li>
