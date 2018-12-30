@@ -15,7 +15,7 @@
 <meta property="og:site_name" content="Est">
 <meta property="og:description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2018-12-30T07:16:53.059Z">
+<meta property="og:updated_time" content="2018-12-30T07:35:33.860Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序人生-Hello’s P2P">
 <meta name="twitter:description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
@@ -146,24 +146,73 @@
             <p>哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏<br><a id="more"></a></p>
 <p>摘  要<br>hello.c是我们每个程序员的初恋。但是它究竟是怎么过完它的一生的，你是否知道？恐怕很难说得清楚吧。本文对从hello.c的诞生，历经预处理、编译、汇编、链接生成可执行文件，再到shell解析命令、fork为其创建进程、execve为其加载、内核为其处理异常、存储管理为其读取数据、IO管理为其显示结果，最后被shell回收完美谢幕的整个过程每一步都进行了详细的说明分析，将整个hello的时候活灵活现地展示于大家面前。</p>
 <p>关键词：预处理、编译、汇编、链接、存储管理、IO设备、进程管理、异常处理</p>
-<p>（摘要0分，缺失-1分，根据内容精彩称都酌情加分0-1分）</p>
 <h2 id="第1章-概述"><a href="#第1章-概述" class="headerlink" title="第1章 概述"></a>第1章 概述</h2><h3 id="1-1-Hello简介"><a href="#1-1-Hello简介" class="headerlink" title="1.1 Hello简介"></a>1.1 Hello简介</h3><p>首先我们利用一个IDE编写生成了hello.c，这样hello就诞生了，但现在只是我们知道要让它做什么，硬件并不知道，我们要将它转换成可执行程序。hello.c要经过预处理、编译、汇编、链接这样几个看起来很简洁其实很繁复的过程为一个可执行文件hello，这样hello就从一个program变成了process，完成了P2P的过程。之后我们在shell中输入对应的执行指令，shell调用fork为其创建进程，调用execve为其加载，hello拥有了自己的进程，然后存储管理系统为它读取数据、IO设备为它实现外部交互、内核为其处理种种异常，hello有条不紊的完成了它的所有指令，最后被shell结束，默默走完了它的一生，不留下一丝踪影，只有CS知道它来过。这就是hello从无到无的O2O过程。</p>
 <h3 id="1-2-环境与工具"><a href="#1-2-环境与工具" class="headerlink" title="1.2 环境与工具"></a>1.2 环境与工具</h3><p>硬件环境：AMD FX-7500 Radeon R7,10 Computer Cores 4G+6G<br>软件环境：Ubuntu16.04.1 LTS<br>开发与调试工具：gedit，gcc，as，ld，edb，readelf</p>
-<h3 id="1-3-中间结果"><a href="#1-3-中间结果" class="headerlink" title="1.3 中间结果"></a>1.3 中间结果</h3><p>文件名<br>内容<br>hello.i<br>hello.c经过预处理之后生成的文件<br>hello.s<br>hello.i经过编译之后生成的汇编代码文件<br>hello.o<br>hello.s经过汇编之后生成的可重定位文件<br>hello<br>hello.o经过链接之后生成的可执行文件<br>hello.elf<br>hello.o的ELF格式<br>helloout.elf<br>hello的ELF格式<br>helloout.asm<br>hello反汇编生成的代码<br>hello.asm<br>hello.o反汇编生成的代码</p>
-<h3 id="1-4-本章小结"><a href="#1-4-本章小结" class="headerlink" title="1.4 本章小结"></a>1.4 本章小结</h3><p>介绍一些基本的东西，接下来我们就要解剖hello运行的整个过程了。<br>（第1章0.5分）</p>
+<h3 id="1-3-中间结果"><a href="#1-3-中间结果" class="headerlink" title="1.3 中间结果"></a>1.3 中间结果</h3><p>文件名<br>内容</p>
+<p>|:—-:|:——-:|<br>|hello.i|hello.c经过预处理之后生成的文件|<br>|hello.s|hello.i经过编译之后生成的汇编代码文件|<br>|hello.o|hello.s经过汇编之后生成的可重定位文件|<br>|hello|hello.o经过链接之后生成的可执行文件|<br>|hello.elf|hello.o的ELF格式|<br>|helloout.elf|hello的ELF格式|<br>|helloout.asm|hello反汇编生成的代码|<br>|hello.asm|hello.o反汇编生成的代码|</p>
+<h3 id="1-4-本章小结"><a href="#1-4-本章小结" class="headerlink" title="1.4 本章小结"></a>1.4 本章小结</h3><p>介绍一些基本的东西，接下来我们就要解剖hello运行的整个过程了。</p>
 <h2 id="第2章-预处理"><a href="#第2章-预处理" class="headerlink" title="第2章 预处理"></a>第2章 预处理</h2><h3 id="2-1-预处理的概念与作用"><a href="#2-1-预处理的概念与作用" class="headerlink" title="2.1 预处理的概念与作用"></a>2.1 预处理的概念与作用</h3><h4 id="2-1-1概念"><a href="#2-1-1概念" class="headerlink" title="2.1.1概念"></a>2.1.1概念</h4><p>顾名思义，预处理就是在程序编译之前的处理。主要有三方面的内容，包括：宏定义、文件包含、条件编译。<br>宏定义：将#define标识的变量和函数进行替换。<br>文件包含：将#include标识的头文件调用出来。头文件通常用.h作为扩展名。对头文件也要预处理，也就是说头文件的宏定义、文件包含、条件编译也要就行处理，这样层层嵌套不断扩大。所以我们预处理得到的文件大小可能是源文件大小的数倍。<br>条件编译：通过一些特定符号（例如：#ifdef、#else、#endif）来处理条件分支语句，使其部分程序段在条件满足时再编译。</p>
 <h4 id="2-1-2作用"><a href="#2-1-2作用" class="headerlink" title="2.1.2作用"></a>2.1.2作用</h4><p>预处理其作为源文件进入编译环节之前的重要操作，最主要的作用无疑就是方便编译器更好的执行编译功能。</p>
 <h3 id="2-2在Ubuntu下预处理的命令"><a href="#2-2在Ubuntu下预处理的命令" class="headerlink" title="2.2在Ubuntu下预处理的命令"></a>2.2在Ubuntu下预处理的命令</h3><p>命令：cpp hello.c &gt; hello.i</p>
 <p>图2-1 hello.c的预处理指令执行</p>
 <h3 id="2-3-Hello的预处理结果解析"><a href="#2-3-Hello的预处理结果解析" class="headerlink" title="2.3 Hello的预处理结果解析"></a>2.3 Hello的预处理结果解析</h3><p>图2-2 hello.i文件中的main函数<br>这便是我用gedit打开的hello.i文件，也就是预处理之后的文件。一番寻找之后我在文件的最后找到了我们源文件编写的hello.c。可以看到没什么太大的变化，但是#include标识的头文件引用不见了，#define标识的宏常量也不见了。之前我们在2.1部分已经较为详细的介绍了预处理具体要做什么，主要是三件事：宏定义处理、文件包含处理、条件编译处理。对应到这个hello.i可以发现，原来有的三个头文件stdio.h、unistd.h、stdlib.h被扩展成了三千多行的一大坨。里面的#define定义也都不见了，还出现了许多#ifdef、#else、#endif等来分割程序块，帮助进行条件编译。</p>
 <h3 id="2-4-本章小结"><a href="#2-4-本章小结" class="headerlink" title="2.4 本章小结"></a>2.4 本章小结</h3><p>编译器为了让程序员可以更加方便地编写代码，做了很多妥协，自己承受了很多委屈。而预处理就是委屈的一些体现，在这里编译器做一些必要的还原工作，为下一步大刀阔斧的处理备好了材料。</p>
-<p>（第2章0.5分）</p>
 <h2 id="第3章-编译"><a href="#第3章-编译" class="headerlink" title="第3章 编译"></a>第3章 编译</h2><h3 id="3-1-编译的概念与作用"><a href="#3-1-编译的概念与作用" class="headerlink" title="3.1 编译的概念与作用"></a>3.1 编译的概念与作用</h3><h4 id="3-1-1概念"><a href="#3-1-1概念" class="headerlink" title="3.1.1概念"></a>3.1.1概念</h4><p>此处的编译主要是指狭义的编译，即编译器将hello.i转换成hello.s的过程。这个过程主要有五个步骤：<br>    （1）词法分析：词法分析的任务是对由字符组成的单词进行处理，从左至右逐个字符地对源程序进行扫描，产生一个个的单词符号，把作为字符串的源程序改造成为单词符号串的中间程序。执行词法分析的程序称为词法分析程序或扫描器。<br>（2）语法分析：编译程序的语法分析器以单词符号作为输入，分析单词符号串是否形成符合语法规则的语法单位，如表达式、赋值、循环等，最后看是否构成一个符合要求的程序，按该语言使用的语法规则分析检查每条语句是否有正确的逻辑结构，程序是最终的一个语法单位。编译程序的语法规则可用上下文无关文法来刻画。<br>（3）生成中间代码：中间代码是源程序的一种内部表示，或称中间语言。中间代码的作用是可使编译程序的结构在逻辑上更为简单明确，特别是可使目标代码的优化比较容易实现中间代码，即为中间语言程序，中间语言的复杂性介于源程序语言和机器语言之间。中间语言有多种形式，常见的有逆波兰记号、四元式、三元式和树。<br>（4）代码优化：代码优化是指对程序进行多种等价变换，使得从变换后的程序出发，能生成更有效的目标代码。所谓等价，是指不改变程序的运行结果。所谓有效，主要指目标代码运行时间较短，以及占用的存储空间较小。这种变换称为优化。GCC编译器可以提供不同等级的优化。<br>（5）生成目标代码：目标代码生成是编译的最后一个阶段。目标代码生成器把语法分析后或优化后的中间代码变换成目标代码。</p>
 <h4 id="3-1-2作用"><a href="#3-1-2作用" class="headerlink" title="3.1.2作用"></a>3.1.2作用</h4><p>编译这阶段产生的.s文件也就是汇编代码，是高级语言转换成机器语言的一个缓冲。</p>
 <h3 id="3-2-在Ubuntu下编译的命令"><a href="#3-2-在Ubuntu下编译的命令" class="headerlink" title="3.2 在Ubuntu下编译的命令"></a>3.2 在Ubuntu下编译的命令</h3><p>命令：gcc -S hello.i -o hello.s</p>
 <p>图3-1 hello.i文件编译指令执行</p>
 <p>图3-2 hello.i执行生成文件展示</p>
-<h3 id="3-3-Hello的编译结果解析"><a href="#3-3-Hello的编译结果解析" class="headerlink" title="3.3 Hello的编译结果解析"></a>3.3 Hello的编译结果解析</h3><h4 id="3-3-1汇编指令"><a href="#3-3-1汇编指令" class="headerlink" title="3.3.1汇编指令"></a>3.3.1汇编指令</h4><p>图3-3 hello.s文件中一些汇编指令展示<br>指令<br>含义<br>.file<br>源文件<br>.globl<br>全局变量<br>.data<br>数据段<br>.type<br>数据类型<br>.size<br>数据大小<br>.long<br>长整数类型<br>.string<br>字符串类型<br>.align<br>对齐<br>.section  .rodata<br>只读数据<br>.text<br>代码段</p>
+<h3 id="3-3-Hello的编译结果解析"><a href="#3-3-Hello的编译结果解析" class="headerlink" title="3.3 Hello的编译结果解析"></a>3.3 Hello的编译结果解析</h3><h4 id="3-3-1汇编指令"><a href="#3-3-1汇编指令" class="headerlink" title="3.3.1汇编指令"></a>3.3.1汇编指令</h4><p>图3-3 hello.s文件中一些汇编指令展示</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">指令</th>
+<th style="text-align:center">含义</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">.file</td>
+<td style="text-align:center">源文件</td>
+</tr>
+<tr>
+<td style="text-align:center">.globl</td>
+<td style="text-align:center">全局变量</td>
+</tr>
+<tr>
+<td style="text-align:center">.data</td>
+<td style="text-align:center">数据段</td>
+</tr>
+<tr>
+<td style="text-align:center">.type</td>
+<td style="text-align:center">数据类型</td>
+</tr>
+<tr>
+<td style="text-align:center">.size</td>
+<td style="text-align:center">数据大小</td>
+</tr>
+<tr>
+<td style="text-align:center">.long</td>
+<td style="text-align:center">长整数类型</td>
+</tr>
+<tr>
+<td style="text-align:center">.string</td>
+<td style="text-align:center">字符串类型</td>
+</tr>
+<tr>
+<td style="text-align:center">.align</td>
+<td style="text-align:center">对齐</td>
+</tr>
+<tr>
+<td style="text-align:center">.section .rodata</td>
+<td style="text-align:center">只读数据</td>
+</tr>
+<tr>
+<td style="text-align:center">.text</td>
+<td style="text-align:center">代码段</td>
+</tr>
+</tbody>
+</table>
 <h4 id="3-3-2数据"><a href="#3-3-2数据" class="headerlink" title="3.3.2数据"></a>3.3.2数据</h4><p>（1）string型<br>在hello.s代码中共有两个字符串类型，均在.rodata只读数据节。</p>
 <p>图3-4 字符串数据展示<br>第一个字符串是“Usage：Hello 学号 姓名！\n”，此字符串在代码中作为printf函数的输出参数，根据图3-4可以发现字符串被编码成UTF-8格式，一个汉字在UTF-8编码中占三个字节。<br>第二个字符串是“Hello %s %s\n”，此此字符串在代码中也是作为printf函数的输出参数。</p>
 <p>（2）int型<br>在hello.s中出现的int型变量总共有3个，全局变量sleepsecs、循环计数变量i和作为mian函数参数的变量argc。</p>
@@ -175,14 +224,73 @@
 <h4 id="3-3-5算数操作"><a href="#3-3-5算数操作" class="headerlink" title="3.3.5算数操作"></a>3.3.5算数操作</h4><p>在hello.c中出现的算术操作有一处，就是循环变量i的自增运算。在汇编代码中的体现是：addl    $1,-4(%rbp)。其中%rbp-4是存放i的地址，-4（%rbp）就是i，然后add是加法操作，其指令模式是：add  src A，dst B。作用是把A和B相加，得到的值存在B中。因为i是int型 的，所以用l作为后缀，表明是四字节加法。$1是立即数，表示十进制的1。那么整句代码的意思就是，把i+1的值再放到i里面，也就实现了i的自增运算。</p>
 <h4 id="3-3-6关系操作"><a href="#3-3-6关系操作" class="headerlink" title="3.3.6关系操作"></a>3.3.6关系操作</h4><p>在hello.c中出现的关系操作有两处：<br>（1）argc!=3。在汇编代码中的体现是cmpl        $3, -20(%rbp)。cmp执行的是比较运算。指令格式为：cmp    src A, dst B。作用效果是执行一个B-A的减法运算，将标志位更新，然后其他语句根据标志位来判断A和B的大小关系(比如其下一句为je    .L2，就是根据其设置的标志位来判断A和B的大小关系，如果相等就跳转至.L2)。然后同样的l的后缀表示的四字节的运算。总的来说cmp运算就是一个不赋值的减法，纯粹为了更新标志位。根据上面的讲述我们可以得出这句代码的意思为：将存放在%rbp-20地址中的数与3相减，设置标志位，然后结合下一句就是如果两者相等，就跳转执行.L2处的代码。<br>（2）i&lt;10。在汇编代码中的体现是cmpl $9, -4(%rbp)。cmp上面已经解释过了，此处就直接解释这句代码的意思。将存放在%rbp-4中的数与9进行相减运算，更新标志位。下一句为jle        .L4。就是如果-4（%rbp）&lt;=9,就跳转.L4的代码（此处.L4处的代码即为循环体的代码，符合hello.c所描述的程序行为）。</p>
 <h4 id="3-3-7数组存取"><a href="#3-3-7数组存取" class="headerlink" title="3.3.7数组存取"></a>3.3.7数组存取</h4><p>在hello.c中出现了一个字符指针型数组，即char *argv[]。这个数组是作为main函数的参数存在的，是一个局部变量，所以我们只能在栈帧里面找到它。在这里我们给出main函数的部分栈帧结构：</p>
-<p>调用main函数的返回地址<br>%rbp（栈帧顶部）(%rbp-0)<br>(%rbp-8)<br>(%rbp-16)<br>argc(%rbp-20)<br>(%rbp-24)<br>argv(%rbp-32)</p>
+<p>|:——————–:|<br>|调用main函数的返回地址|<br>|%rbp（栈帧顶部）(%rbp-0)|<br>|(%rbp-8)|<br>|(%rbp-16)|<br>|argc(%rbp-20)|<br>|(%rbp-24)|<br>|argv(%rbp-32)|</p>
 <p>(%rbp-32)处存放的就是字符指针型数组的首地址，通过首地址+0、+8、+16就可以一次访问到它的元素argv[0]、argv[1]、argv[2]。根据地址访问我们就能实际操作数组里面的数据了。具体汇编代码可见图3-7。</p>
-<h4 id="3-3-8控制转移"><a href="#3-3-8控制转移" class="headerlink" title="3.3.8控制转移"></a>3.3.8控制转移</h4><p>汇编代码实现控制转移主要通过jx指令，下面列出了jx的相关操作：<br>JX指令<br>效果<br>jmp label<br>无条件跳转<br>jmp *Operand<br>无条件间接跳转<br>je label<br>相等时跳转<br>jne label<br>不相等时跳转<br>js label<br>结果为负数时跳转<br>jns label<br>结果为非负数时跳转<br>jg label<br>大于时跳转（有符号数）<br>jge label<br>大于等于时跳转（有符号数）<br>jl label<br>小于时跳转（有符号数）<br>jle label<br>小于等于时跳转（有符号数）<br>ja label<br>大于时跳转（无符号数）<br>jb label<br>小于时跳转（无符号数）<br>通常JX指令要结合cmp指令（设置标志位）或者test指令来实现控制转移。<br>程序中的控制转移共有两处：<br>第一个是单分支的if条件语句，转换为goto风格即为<br>t = test-expr<br>if(!t)<br>    goto next<br>if-statement<br>在图3-8中我们可以看到它是如何根据跳转指令实现控制转移的，模式与上面所写的goto模式完全相同。</p>
+<h4 id="3-3-8控制转移"><a href="#3-3-8控制转移" class="headerlink" title="3.3.8控制转移"></a>3.3.8控制转移</h4><p>汇编代码实现控制转移主要通过jx指令，下面列出了jx的相关操作：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center">JX指令</th>
+<th style="text-align:center">效果</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">jmp label</td>
+<td style="text-align:center">无条件跳转</td>
+</tr>
+<tr>
+<td style="text-align:center">jmp *Operand</td>
+<td style="text-align:center">无条件间接跳转</td>
+</tr>
+<tr>
+<td style="text-align:center">je label</td>
+<td style="text-align:center">相等时跳转</td>
+</tr>
+<tr>
+<td style="text-align:center">jne label</td>
+<td style="text-align:center">不相等时跳转</td>
+</tr>
+<tr>
+<td style="text-align:center">js label</td>
+<td style="text-align:center">结果为负数时跳转</td>
+</tr>
+<tr>
+<td style="text-align:center">jns label</td>
+<td style="text-align:center">结果为非负数时跳转</td>
+</tr>
+<tr>
+<td style="text-align:center">jg label</td>
+<td style="text-align:center">大于时跳转（有符号数）</td>
+</tr>
+<tr>
+<td style="text-align:center">jge label</td>
+<td style="text-align:center">大于等于时跳转（有符号数）</td>
+</tr>
+<tr>
+<td style="text-align:center">jl label</td>
+<td style="text-align:center">小于时跳转（有符号数）</td>
+</tr>
+<tr>
+<td style="text-align:center">jle label</td>
+<td style="text-align:center">小于等于时跳转（有符号数）</td>
+</tr>
+<tr>
+<td style="text-align:center">ja label</td>
+<td style="text-align:center">大于时跳转（无符号数）</td>
+</tr>
+<tr>
+<td style="text-align:center">jb label</td>
+<td style="text-align:center">小于时跳转（无符号数）</td>
+</tr>
+</tbody>
+</table>
+<p>通常JX指令要结合cmp指令（设置标志位）或者test指令来实现控制转移。<br>程序中的控制转移共有两处：<br>第一个是单分支的if条件语句，转换为goto风格即为<br>t = test-expr<br>if(!t)<br>    goto next<br>if-statement<br>在图3-8中我们可以看到它是如何根据跳转指令实现控制转移的，模式与上面所写的goto模式完全相同。</p>
 <p>图3-8 if分支语句的控制实现分析<br>第二处是for循环语句，for循环的goto风格为：<br>loop:<br>    body-statement<br>    update-expr;<br>    t = test-expr;<br>    if(t)<br>        goto loop;<br>    else-statement<br>    基本模式就是先执行循环体，然后循环变量自增，之后判断循环边界，如果满足就回跳，不满足就顺序向下跳出循环。具体实现可以看图3-9。</p>
 <p>图3-9 for循环语句控制实现分析</p>
 <h4 id="3-3-9函数操作"><a href="#3-3-9函数操作" class="headerlink" title="3.3.9函数操作"></a>3.3.9函数操作</h4><p>函数操作主要表现在各个函数之间的调用，一个函数要调用另一个函数通常要实现两个块内容：数据传送和控制转移。函数调用的大致过程如下：首先是调用时要将参数（如果有参数的话）通过寄存器和栈准备好，然后通过call指令将控制转移给被调用函数。被调用函数执行完所有操作后要给调用函数已反馈。这个时候可分为数据传送和控制转移两部分。函数返回值默认放在%rax中，控制权通过ret指令返回给调用函数，至此一个函数的调用过程才完整结束。接下来详细说明一下数据传送的细节，说说函数是怎么传参的。<br>在64位系统中，共有六个寄存器用来存放参数，分别是%rdi、%rsi、%rdx、%rcx、%r8、%r9，分别对应于第1-6个参数。当函数参数大于七个的时候将被存放在栈中，由最后一个参数到第七个参数一次入栈。它们在栈中通过栈帧指针（可选）或者栈指针被调用。详细的栈帧结构看图3-10。</p>
 <p>图3-10 栈帧结构<br>程序中设计的函数调用有以下几处：<br>（1）系统函数调用main函数<br>数据传送：第一个参数int argc被存放在%edi中，第二个参数char *argv[]被存放在%rsi中。<br>控制转移：hello.s代码中并没有实际体现，但是其确实是被系统函数call了的。<br>数据返回：将$0 存放在%eax中作为返回值。<br>控制返回：①通过ret；②通过call exit。<br>（2）main函数调用puts函数<br>数据传送：将字符串.LC0（首地址之类的信息）存放在%edi中作为第一个参数，也是唯一一个参数。<br>控制转移：call puts<br>数据返回：无<br>控制返回：通过ret<br>（3）main函数调用exit函数<br>数据传送：将$1送至%edi中作为唯一一个参数。<br>控制转移：call exit。<br>数据返回：无。<br>控制返回：exit是系统退出函数，不会再将控制流返回。<br>（4）main函数调用printf函数<br>数据传送：将第三个参数argv[2]传送至%rdx，将第二个参数argv[1]传送至%rsi，将第一个参数字符串.LC1（首地址）传送至%edi。<br>控制转移：call printf。<br>数据返回：无。<br>控制返回：通过ret。<br>（5）main函数调用sleep函数<br>数据传送：将参数sleepsecs传送至%edi作为唯一一个参数。<br>控制转移：call sleep。<br>数据返回：无。<br>控制返回：通过ret。<br>（6）main函数调用getchar函数<br>数据传送：无。<br>控制转移：call getchar。<br>数据返回：该代码中main函数并未接收被调用函数的返回值。<br>控制返回：通过ret。</p>
-<h3 id="3-4-本章小结"><a href="#3-4-本章小结" class="headerlink" title="3.4 本章小结"></a>3.4 本章小结</h3><p>编译过程中，不管你原来是什么高级语言，通通要经过一场大手术，将你改造得面目全非（只有汇编程序员才能懂）。不为其他目的，就是为了能让机器更好地看清楚你想干什么，高级语言太高级，机器看不懂。虽然汇编也不是机器语言，当相较来说它离机器更进一步了。<br>（第3章2分）</p>
+<h3 id="3-4-本章小结"><a href="#3-4-本章小结" class="headerlink" title="3.4 本章小结"></a>3.4 本章小结</h3><p>编译过程中，不管你原来是什么高级语言，通通要经过一场大手术，将你改造得面目全非（只有汇编程序员才能懂）。不为其他目的，就是为了能让机器更好地看清楚你想干什么，高级语言太高级，机器看不懂。虽然汇编也不是机器语言，当相较来说它离机器更进一步了。</p>
 <h2 id="第4章-汇编"><a href="#第4章-汇编" class="headerlink" title="第4章 汇编"></a>第4章 汇编</h2><h3 id="4-1-汇编的概念与作用"><a href="#4-1-汇编的概念与作用" class="headerlink" title="4.1 汇编的概念与作用"></a>4.1 汇编的概念与作用</h3><h4 id="4-1-1概念"><a href="#4-1-1概念" class="headerlink" title="4.1.1概念"></a>4.1.1概念</h4><p>汇编就是汇编器（as）通过解析各种汇编指令，将汇编代码（.s文件）转换成可重定位的机器语言（.o文件）。</p>
 <h4 id="4-1-2作用"><a href="#4-1-2作用" class="headerlink" title="4.1.2作用"></a>4.1.2作用</h4><p>将汇编代码转换成机器代码，p2p过程重要一环。</p>
 <h3 id="4-2-在Ubuntu下汇编的命令"><a href="#4-2-在Ubuntu下汇编的命令" class="headerlink" title="4.2 在Ubuntu下汇编的命令"></a>4.2 在Ubuntu下汇编的命令</h3><p>指令：as hello.s -o hello.o</p>
@@ -198,7 +306,7 @@
 <h3 id="4-4-Hello-o的结果解析"><a href="#4-4-Hello-o的结果解析" class="headerlink" title="4.4 Hello.o的结果解析"></a>4.4 Hello.o的结果解析</h3><p>通过指令objdump -d -r hello.o &gt; hello.asm  得到反汇编代码如图4-6，其与hello.s中的汇编代码（图4-7）进行对比后，得到以下几点不同：<br>（1）在原汇编代码中的代码块标记（如.L3）在反汇编代码中都没有了，取而代之的是间接寻址。这也不难理解，翻译成机器语言后这个汇编代码中帮助识别的部分也就不见了，展现的是机器能识别的地址。<br>（2）函数调用时，原汇编代码用的是函数名称，而反汇编代码用的直接是函数地址。这个原因和上面的差不多，汇编代码还要让人看，而机器语言就是为了让机器看的，所以这点差别也是理应存在的。<br>（3）在反汇编代码中全局变量的访问也是通过代码，而原汇编代码是通过符号标识。<br>（4）在反汇编代码中同步出现了机器码。<br>总的来说，两者大体还是相同的。造成不同的原因也很显然，一个是被机器“嚼”过一遍的，一个是没被机器“嚼”过一遍的，自然“味道”就有些不同了。</p>
 <p>图4-6 反汇编代码部分展示</p>
 <p>图4-7 原汇编代码部分展示</p>
-<h3 id="4-5-本章小结"><a href="#4-5-本章小结" class="headerlink" title="4.5 本章小结"></a>4.5 本章小结</h3><p>本阶段相当于是继承了上一阶段，“手术”进行到底的结果。经过编译和汇编的联合大手术，机器也算是能读懂我们想要做什么了。但是信息尚是支离破碎，需要链接器的进一步组织，机器才能准确把握我们程序员的意图。<br>（第4章1分）</p>
+<h3 id="4-5-本章小结"><a href="#4-5-本章小结" class="headerlink" title="4.5 本章小结"></a>4.5 本章小结</h3><p>本阶段相当于是继承了上一阶段，“手术”进行到底的结果。经过编译和汇编的联合大手术，机器也算是能读懂我们想要做什么了。但是信息尚是支离破碎，需要链接器的进一步组织，机器才能准确把握我们程序员的意图。</p>
 <h2 id="第5章-链接"><a href="#第5章-链接" class="headerlink" title="第5章 链接"></a>第5章 链接</h2><h3 id="5-1-链接的概念与作用"><a href="#5-1-链接的概念与作用" class="headerlink" title="5.1 链接的概念与作用"></a>5.1 链接的概念与作用</h3><h4 id="5-1-1概念"><a href="#5-1-1概念" class="headerlink" title="5.1.1概念"></a>5.1.1概念</h4><p>链接是将各种代码和数据片段收集起来并组合成一个单一文件的过程，这个文件可被加载（复制）到内存并执行。链接由链接器自动执行。</p>
 <h4 id="5-1-2作用"><a href="#5-1-2作用" class="headerlink" title="5.1.2作用"></a>5.1.2作用</h4><p>将源程序所调用的所有外部函数组织起来，通过符号解析和重定位把可重定位文件转换成可执行文件，完成高级语言向机器语言转换的最后一步。</p>
 <h3 id="5-2-在Ubuntu下链接的命令"><a href="#5-2-在Ubuntu下链接的命令" class="headerlink" title="5.2 在Ubuntu下链接的命令"></a>5.2 在Ubuntu下链接的命令</h3><p>通过链接命令ld -o hello -dynamic-linker /lib64/ld-linux-x86-64.so.2 /usr/lib/x86_64-linux-gnu/crt1.o /usr/lib/x86_64-linux-gnu/crti.o hello.o /usr/lib/x86_64-linux-gnu/libc.so /usr/lib/x86_64-linux-gnu/crtn.o获得hello可执行文件，如图5-1。 </p>
@@ -215,97 +323,11 @@
 <h4 id="5-5-2绝对地址的重定位"><a href="#5-5-2绝对地址的重定位" class="headerlink" title="5.5.2绝对地址的重定位"></a>5.5.2绝对地址的重定位</h4><p>相较于基于相对地址的重定位，绝对地址的重定位就简单一些了。通过符号所在节首地址加上偏移量就可以定位到引用符号的地址了。<br>图5-6是helloout.asm中一些重定位结果，其中红框所圈的就是相对地址的重定位，绿框所圈的是绝对地址的重定位。</p>
 <p>图5-6 部分重定位结果展示</p>
 <h3 id="5-6-hello的执行流程"><a href="#5-6-hello的执行流程" class="headerlink" title="5.6 hello的执行流程"></a>5.6 hello的执行流程</h3><pre><code>下面列出了hello从开始到结束整个过程中依次调用的函数，以及它们的地址。
-</code></pre><table>
-<thead>
-<tr>
-<th>函数名</th>
-<th style="text-align:right">函数地址</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>ld-2.23.so!_dl_start</td>
-<td style="text-align:right">0x00007fc7843379b0</td>
-</tr>
-<tr>
-<td>ld-2.23.so!_dl_init</td>
-<td style="text-align:right">0x00007fc784346740</td>
-</tr>
-<tr>
-<td>hello!_start</td>
-<td style="text-align:right">0x00000000004004d0</td>
-</tr>
-<tr>
-<td>libc-2.23.so!__libc_start_main</td>
-<td style="text-align:right">0x00007fc783f86740</td>
-</tr>
-<tr>
-<td>-libc-2.23.so!__cxa_atexit</td>
-<td style="text-align:right">0x00007fc783fa0280</td>
-</tr>
-<tr>
-<td>-libc-2.23.so!__libc_csu_init</td>
-<td style="text-align:right">0x0000000000400580</td>
-</tr>
-<tr>
-<td>hello!_init</td>
-<td style="text-align:right">0x0000000000400430</td>
-</tr>
-<tr>
-<td>libc-2.23.so!_setjmp</td>
-<td style="text-align:right">0x00007fc783f9b250</td>
-</tr>
-<tr>
-<td>-libc-2.23.so!_sigsetjmp</td>
-<td style="text-align:right">0x00007fc783f9b1b0</td>
-</tr>
-<tr>
-<td>-libc-2.23.so!__sigjmp_save</td>
-<td style="text-align:right">0x00007fc783f9b210</td>
-</tr>
-<tr>
-<td>hello!main</td>
-<td style="text-align:right">0x0000000000400523</td>
-</tr>
-<tr>
-<td>hello!puts@plt</td>
-<td style="text-align:right">0x0000000000400460</td>
-</tr>
-<tr>
-<td>hello!exit@plt</td>
-<td style="text-align:right">0x00000000004004a0</td>
-</tr>
-<tr>
-<td>*hello!printf@plt</td>
-<td style="text-align:right">0x0000000000400470</td>
-</tr>
-<tr>
-<td>*hello!sleep@plt</td>
-<td style="text-align:right">0x00000000004004b0</td>
-</tr>
-<tr>
-<td>*hello!getchar@plt</td>
-<td style="text-align:right">0x0000000000400490</td>
-</tr>
-<tr>
-<td>-ld-2.23.so!_dl_fixup</td>
-<td style="text-align:right">0x00007fc7843459f0</td>
-</tr>
-<tr>
-<td>–ld-2.23.so!_dl_lookup_symbol_x</td>
-<td style="text-align:right">0x00007fc7843409d0</td>
-</tr>
-<tr>
-<td>libc-2.23.so!_exit</td>
-<td style="text-align:right">0x00007fc7843515b0</td>
-</tr>
-</tbody>
-</table>
+</code></pre><p>函数名|函数地址<br>|:——:|:——-:|<br>|ld-2.23.so!_dl_start|0x00007fc7843379b0|<br>|ld-2.23.so!_dl_init|0x00007fc784346740|<br>|hello!_start|0x00000000004004d0|<br>|libc-2.23.so!<strong>libc_start_main|0x00007fc783f86740|<br>|-libc-2.23.so!</strong>cxa_atexit|0x00007fc783fa0280|<br>|-libc-2.23.so!<strong>libc_csu_init|0x0000000000400580|<br>|hello!_init|0x0000000000400430|<br>|libc-2.23.so!_setjmp|0x00007fc783f9b250|<br>|-libc-2.23.so!_sigsetjmp|0x00007fc783f9b1b0|<br>|-libc-2.23.so!</strong>sigjmp_save|0x00007fc783f9b210|<br>|hello!main|0x0000000000400523|<br>|hello!puts@plt|0x0000000000400460|<br>|hello!exit@plt|0x00000000004004a0|<br>|<em>hello!printf@plt|0x0000000000400470|<br>|</em>hello!sleep@plt|0x00000000004004b0|<br>|*hello!getchar@plt|0x0000000000400490|<br>|-ld-2.23.so!_dl_fixup|0x00007fc7843459f0|<br>|–ld-2.23.so!_dl_lookup_symbol_x|0x00007fc7843409d0|<br>|libc-2.23.so!_exit|0x00007fc7843515b0|</p>
 <h3 id="5-7-Hello的动态链接分析"><a href="#5-7-Hello的动态链接分析" class="headerlink" title="5.7 Hello的动态链接分析"></a>5.7 Hello的动态链接分析</h3><p>动态链接依赖于位置无关函数PIC。PIC函数的代码可以直接加载无需重定位。动态链接过程主要就是实现PIC的数据引用和PIC的函数调用。<br>PIC数据引用通过一个全局偏移量表（GOT），它位于数据段的开始，如图5-7所示。在GOT中，每个被目标代码所引用的全局数据目标（过程或全局变量）都有一个八字节条目。编译器会为每个条目都生成一个重定位记录。在加载时，动态链接器会重定位GOT中的每个条目，使得他们包含正确的绝对地址。<br>PIC函数调用采用一个延迟绑定的策略，GNU编译器将过程地址的绑定推迟到第一次调用该过程时。延迟绑定是通过两个数据结构之间的交互实现的，这两个数据结构是：GOT和过程链接表（PLT）。如果一个目标模块调用定义在共享库中的任何函数，那么他就有自己的GOT和PLT。GOT是数据段的一部分，而PLT是代码段的一部分。PLT是一个数组，其中每个条目是16字节代码（如图5-8）。</p>
 <p>图5-7 hello在dl_init运行前后的GOT对比<br>通过图5-7中在dl_init运行前后GOT的对比，我们可以看出来动态链接的过程。再结合图5-8我们就能看出函数调用的一些现象。</p>
 <p>图5-8 hello的PLT展示</p>
 <h3 id="5-8-本章小结"><a href="#5-8-本章小结" class="headerlink" title="5.8 本章小结"></a>5.8 本章小结</h3><p>链接的过程其实就像是在请帮手，程序要执行的工作太过丰富，大家的功能也比较专一，所以一项工作的完成就需要许多“同伴”来执行。而链接就是组织工作的过程，通过链接却工作虽然分配零碎但是却依然能井然有序的进行。<br>通过预处理、编译、汇编、链接的一系列操作，hello.c摇身一变成为了一个可执行程序，完成了从program到process的完美蜕变，接下来，它终于要投身机器的怀抱，存在于电流与硬件之上了。</p>
-<p>（第5章1分）</p>
 <h2 id="第6章-hello进程管理"><a href="#第6章-hello进程管理" class="headerlink" title="第6章 hello进程管理"></a>第6章 hello进程管理</h2><h3 id="6-1-进程的概念与作用"><a href="#6-1-进程的概念与作用" class="headerlink" title="6.1 进程的概念与作用"></a>6.1 进程的概念与作用</h3><h4 id="6-1-1概念"><a href="#6-1-1概念" class="headerlink" title="6.1.1概念"></a>6.1.1概念</h4><p>进程即一个执行中程序的实例。</p>
 <h4 id="6-1-2作用"><a href="#6-1-2作用" class="headerlink" title="6.1.2作用"></a>6.1.2作用</h4><p>进程概念的抽象给我们一种假象，似乎我们的程序是系统当前唯一运行的程序一样。我们的程序像是独占地使用处理器和内存。处理器就好像是无间断地一条接一条地执行我们程序中的指令。最后，我们程序中的代码和数据好像是系统内存中唯一存在的对象。</p>
 <h3 id="6-2-简述壳Shell-bash的作用与处理流程"><a href="#6-2-简述壳Shell-bash的作用与处理流程" class="headerlink" title="6.2 简述壳Shell-bash的作用与处理流程"></a>6.2 简述壳Shell-bash的作用与处理流程</h3><p>Shell字面理解就是个“壳”，是操作系统（内核）与用户之间的桥梁，充当命令解释器的作用，将用户输入的命令翻译给系统执行。<br>处理流程如下：（1）读取用户由键盘输入的命令行。<br>（2）分析命令，以命令名作为文件名，并将其它参数改造为系统调用execve( )内部处理所要求的形式。<br>（3）终端进程调用fork( )建立一个子进程。<br>（4）终端进程本身调用wait()来等待子进程完成（如果是后台命令，则不等待）。当子进程运行时调用execve()，子进程根据文件名到目录中查找有关文件，调入内存，执行这个程序。<br>（5）如果命令末尾有&amp;,则终端进程不用执行系统调用wait()，立即发提示符，让用户入下一条命令；否则终端进程会一直等待，当子进程完成工作后，向父进程报告，此时中断进程醒来，作必要的判别工作后，终端发出命令提示符，重复上述处理过程。</p>
@@ -319,7 +341,7 @@
 <p>图6-2（b） hello执行过程中键入Ctrl+Z</p>
 <p>图6-2（c） hello执行过程中键入Ctrl+C</p>
 <p>图6-2（d） hello执行过程中乱按</p>
-<h3 id="6-7本章小结"><a href="#6-7本章小结" class="headerlink" title="6.7本章小结"></a>6.7本章小结</h3><p>这本章中，介绍了hello投身进程洪流之后发生的具体情况。从shell为其fork，为其execve，hello正式成为一个进程，到内核通过各种异常密切关注其运行情况，让它顺利运行，不捅娄子。hello到现在总算是可以出结果了，这一路艰辛不易，恐怕只有它自己和CPU知道吧。<br>（第6章1分）</p>
+<h3 id="6-7本章小结"><a href="#6-7本章小结" class="headerlink" title="6.7本章小结"></a>6.7本章小结</h3><p>这本章中，介绍了hello投身进程洪流之后发生的具体情况。从shell为其fork，为其execve，hello正式成为一个进程，到内核通过各种异常密切关注其运行情况，让它顺利运行，不捅娄子。hello到现在总算是可以出结果了，这一路艰辛不易，恐怕只有它自己和CPU知道吧。</p>
 <h2 id="第7章-hello的存储管理"><a href="#第7章-hello的存储管理" class="headerlink" title="第7章 hello的存储管理"></a>第7章 hello的存储管理</h2><h3 id="7-1-hello的存储器地址空间"><a href="#7-1-hello的存储器地址空间" class="headerlink" title="7.1 hello的存储器地址空间"></a>7.1 hello的存储器地址空间</h3><h4 id="7-1-1物理地址"><a href="#7-1-1物理地址" class="headerlink" title="7.1.1物理地址"></a>7.1.1物理地址</h4><p>用于内存芯片级的单元寻址，与处理器和CPU连接的地址总线相对应。虽然我们可以直接把物理地址理解成插在机器上那根内存本身，把内存看成一个从0字节一直到最大空量逐字节的编号的大数组，然后把这个数组叫做物理地址，但是事实上，这只是一个硬件提供给软件的抽像，内存的寻址方式并不是这样。所以，说它是“与地址总线相对应”，是更贴切一些，不过抛开对物理内存寻址方式的考虑，直接把物理地址与物理的内存一一对应，也是可以接受的。也许错误的理解更利于形而上的抽像。</p>
 <h4 id="7-1-3虚拟地址"><a href="#7-1-3虚拟地址" class="headerlink" title="7.1.3虚拟地址"></a>7.1.3虚拟地址</h4><p>虚拟地址就是依赖于虚拟内存的地址。虚拟内存是对整个内存的抽像描述。它是相对于物理内存来讲的，可以直接理解成“不直实的”，“假的”内存，例如，一个0x08000000内存地址，它并不对就物理地址上那个大数组中0x08000000 - 1那个地址元素。之所以是这样，是因为现代操作系统都提供了一种内存管理的抽像，即虚拟内存（virtual memory）。进程使用虚拟内存中的地址，由操作系统协助相关硬件，把它“转换”成真正的物理地址。</p>
 <h4 id="7-1-4线性地址"><a href="#7-1-4线性地址" class="headerlink" title="7.1.4线性地址"></a>7.1.4线性地址</h4><p>跟逻辑地址类似，它也是一个不真实的地址，如果逻辑地址是对应的硬件平台段式管理转换前地址的话，那么线性地址则对应了硬件页式内存的转换前地址。</p>
@@ -353,7 +375,7 @@
 <h4 id="7-9-3分割空闲块"><a href="#7-9-3分割空闲块" class="headerlink" title="7.9.3分割空闲块"></a>7.9.3分割空闲块</h4><p>当分配器找到一个匹配的空闲块，它会选择给程序分配整个空闲块还是只分配其中一部分。假如只分配一部分的话就会将空闲块分割。</p>
 <h4 id="7-9-4获得额外的堆内存"><a href="#7-9-4获得额外的堆内存" class="headerlink" title="7.9.4获得额外的堆内存"></a>7.9.4获得额外的堆内存</h4><p>如果分配器不能为请求块找到合适的空闲块并且最大程度地合并也不行的话，分配器就会通过sbrk函数，向内核请求额外的堆内存。分配器将额外的内存转化为一个大的空闲块，将这个块插入到空闲链表中，然后将被请求的块放置在这个新的空闲块中。</p>
 <h4 id="7-9-5合并相邻的空闲块"><a href="#7-9-5合并相邻的空闲块" class="headerlink" title="7.9.5合并相邻的空闲块"></a>7.9.5合并相邻的空闲块</h4><p>当一个已分配的额内存块被释放时，可能有其他空闲块与这个新释放的空闲块相邻。那么我们就要将其合并成为更大的空闲块，以满足以后较大的块请求。这里讲一下带边界标记的合并。相较于图7-10的块模式，我们无法快速合并当前块和前一块。所以我们改进其模式为图7-12的块模式，这个模式中我们加入了脚部，它是头部的复制。因为前一块的脚部与当前块的头部相邻，所以我们就可以访问到前一块了。</p>
-<h3 id="7-10本章小结"><a href="#7-10本章小结" class="headerlink" title="7.10本章小结"></a>7.10本章小结</h3><p>在本章中，我们详细讨论了一下hello是如何存在的。包括它的主体在哪里，怎么被读，怎么被写。还有后来进程过程中，如何被内核所“指导”、“监督”、“辅助”。内核在竭尽所能的满足hello的一切需要，可以说是“既当爹又当妈”。<br>（第7章 2分）</p>
+<h3 id="7-10本章小结"><a href="#7-10本章小结" class="headerlink" title="7.10本章小结"></a>7.10本章小结</h3><p>在本章中，我们详细讨论了一下hello是如何存在的。包括它的主体在哪里，怎么被读，怎么被写。还有后来进程过程中，如何被内核所“指导”、“监督”、“辅助”。内核在竭尽所能的满足hello的一切需要，可以说是“既当爹又当妈”。</p>
 <h2 id="第8章-hello的IO管理"><a href="#第8章-hello的IO管理" class="headerlink" title="第8章 hello的IO管理"></a>第8章 hello的IO管理</h2><h3 id="8-1-Linux的IO设备管理方法"><a href="#8-1-Linux的IO设备管理方法" class="headerlink" title="8.1 Linux的IO设备管理方法"></a>8.1 Linux的IO设备管理方法</h3><p>设备的模型化：所有的IO设备都被模型化为文件，而所有的输入和输出都被当做对相应文件的读和写来执行，这种将设备优雅地映射为文件的方式，允许Linux内核引出一个简单低级的应用接口，称为Unix I/O。</p>
 <h3 id="8-2-简述Unix-IO接口及其函数"><a href="#8-2-简述Unix-IO接口及其函数" class="headerlink" title="8.2 简述Unix IO接口及其函数"></a>8.2 简述Unix IO接口及其函数</h3><h4 id="8-2-1Unix-I-O接口统一操作"><a href="#8-2-1Unix-I-O接口统一操作" class="headerlink" title="8.2.1Unix I/O接口统一操作"></a>8.2.1Unix I/O接口统一操作</h4><p>（1）打开文件。一个应用程序通过要求内核打开相应的文件，来宣告它想要访问一个I/O设备，内核返回一个小的非负整数，叫做描述符，它在后续对此文件的所有操作中标识这个文件，内核记录有关这个打开文件的所有信息。<br>（2）Shell创建的每个进程都有三个打开的文件：标准输入，标准输出，标准错误。<br>（3）改变当前的文件位置：对于每个打开的文件，内核保持着一个文件位置k，初始为0，这个文件位置是从文件开头起始的字节偏移量，应用程序能够通过执行seek，显式地将改变当前文件位置k。<br>（4）读写文件：一个读操作就是从文件复制n&gt;0个字节到内存，从当前文件位置k开始，然后将k增加到k+n，给定一个大小为m字节的而文件，当k&gt;=m时，触发EOF。类似一个写操作就是从内存中复制n&gt;0个字节到一个文件，从当前文件位置k开始，然后更新k。<br>（5）关闭文件，内核释放文件打开时创建的数据结构，并将这个描述符恢复到可用的描述符池中去。</p>
 <h4 id="8-2-2-Unix-I-O函数"><a href="#8-2-2-Unix-I-O函数" class="headerlink" title="8.2.2 Unix I/O函数"></a>8.2.2 Unix I/O函数</h4><p>int open(char<em> filename,int flags,mode_t mode) ，进程通过调用open函数来打开一个存在的文件或是创建一个新文件的。open函数将filename转换为一个文件描述符，并且返回描述符数字，返回的描述符总是在进程中当前没有打开的最小描述符，flags参数指明了进程打算如何访问这个文件，mode参数指定了新文件的访问权限位。<br>int close(fd)，fd是需要关闭的文件的描述符，close返回操作结果。<br>ssize_t read(int fd,void </em>buf,size_t n)，read函数从描述符为fd的当前文件位置赋值最多n个字节到内存位置buf。返回值-1表示一个错误，0表示EOF，否则返回值表示的是实际传送的字节数量。<br>ssize_t wirte(int fd,const void *buf,size_t n)，write函数从内存位置buf复制至多n个字节到描述符为fd的当前文件。</p>
@@ -364,7 +386,6 @@
 <p>sys_call将字符串中的字节“Hello 1170300629 szm”从寄存器中通过总线复制到显卡的显存中，显存中存储的是字符的ASCII码。字符显示驱动子程序将通过ASCII码在字模库中找到点阵信息将点阵信息存储到vram中。显示芯片会按照一定的刷新频率逐行读取vram，并通过信号线向液晶显示器传输每一个点（RGB分量）。于是我们的打印字符串“Hello 1170300629 szm”就显示在了屏幕上。</p>
 <h3 id="8-4-getchar的实现分析"><a href="#8-4-getchar的实现分析" class="headerlink" title="8.4 getchar的实现分析"></a>8.4 getchar的实现分析</h3><p>异步异常-键盘中断的处理：用户按键之后，键盘接口会得到按键扫描码，同时产生一个中断信号，之后当前程序陷入内核模式，处理该中断。具体就是接受按键扫描码转成ascii码，保存到系统的键盘缓冲区。然后程序继续执行到getchar之后，getchar调用read系统函数，通过系统调用读取按键ascii码，直到接受到回车键才返回。</p>
 <h3 id="8-5本章小结"><a href="#8-5本章小结" class="headerlink" title="8.5本章小结"></a>8.5本章小结</h3><p>本章我们看了一看hello是如何与用户进行交互的。熟悉了Linux的IO设备管理方法、Unix IO接口及其函数，分析了printf函数和getchar函数。</p>
-<p>（第8章1分）</p>
 <h2 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h2><p>hello，它悄悄地来了，然后悄悄地走了，挥一挥衣袖，不留下一丝痕迹。但它的点滴，CS都一一记录了下来：</p>
 <pre><code>1. 编写hello.c。程序员通过IDE编写构造出hello的最初形态；
 2. 预处理hello.c。预处理器将hello.c中调用的外部代码块合并到源代码中形成hello.i。
@@ -378,13 +399,12 @@
 10. 访问内存。内存管理系统将代码中的段地址转换为虚拟地址，再通过TLB和四级页表将虚拟地址转换为物理地址，再根据物理地址通过三级缓存找到对应数据。
 11. 申请动态内存。动态内存分配器为hello分配动态内存。
 12. 结束程序。CPU执行完hello的最后一条指令后，shell父进程回收hello进程。
-</code></pre><p>（结论0分，缺少 -1分，根据内容酌情加分）<br>附件<br>文件名<br>内容<br>hello.i<br>hello.c经过预处理之后生成的文件<br>hello.s<br>hello.i经过编译之后生成的汇编代码文件<br>hello.o<br>hello.s经过汇编之后生成的可重定位文件<br>hello<br>hello.o经过链接之后生成的可执行文件<br>hello.elf<br>hello.o的ELF格式<br>helloout.elf<br>hello的ELF格式<br>helloout.asm<br>hello反汇编生成的代码<br>hello.asm<br>hello.o反汇编生成的代码</p>
-<p>（附件0分，缺失 -1分）<br>参考文献<br> [1]  Randal E.Bryant, David R.O’Hallaron著,龚奕利，贺莲译.深入理解计算机系统（第3版）[M].北京：机械工业出版社，2016.7（2018.4重印）<br>[2]  printf函数的深入剖析：<a href="https://www.cnblogs.com/pianist/p/3315801.html" target="_blank" rel="noopener">https://www.cnblogs.com/pianist/p/3315801.html</a><br>[3] 逻辑地址、物理地址、虚拟地址、线性地址：<a href="https://www.cnblogs.com/zengkefu/p/5452792.html" target="_blank" rel="noopener">https://www.cnblogs.com/zengkefu/p/5452792.html</a></p>
-<p>（参考文献0分，确实 -1分）</p>
+</code></pre><p>附件<br>文件名<br>内容<br>hello.i<br>hello.c经过预处理之后生成的文件<br>hello.s<br>hello.i经过编译之后生成的汇编代码文件<br>hello.o<br>hello.s经过汇编之后生成的可重定位文件<br>hello<br>hello.o经过链接之后生成的可执行文件<br>hello.elf<br>hello.o的ELF格式<br>helloout.elf<br>hello的ELF格式<br>helloout.asm<br>hello反汇编生成的代码<br>hello.asm<br>hello.o反汇编生成的代码</p>
+<p>参考文献<br> [1]  Randal E.Bryant, David R.O’Hallaron著,龚奕利，贺莲译.深入理解计算机系统（第3版）[M].北京：机械工业出版社，2016.7（2018.4重印）<br>[2]  printf函数的深入剖析：<a href="https://www.cnblogs.com/pianist/p/3315801.html" target="_blank" rel="noopener">https://www.cnblogs.com/pianist/p/3315801.html</a><br>[3] 逻辑地址、物理地址、虚拟地址、线性地址：<a href="https://www.cnblogs.com/zengkefu/p/5452792.html" target="_blank" rel="noopener">https://www.cnblogs.com/zengkefu/p/5452792.html</a></p>
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年12月30日 15:16</p>
+        <p>最后更新： 2018年12月30日 15:35</p>
         <p>原始链接： <a class="post-url" href="/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/" title="程序人生-Hello’s P2P">https://Est-C.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/</a></p>
         <footer>
             <a href="https://Est-C.coding.me/Est-C.coding.me">
