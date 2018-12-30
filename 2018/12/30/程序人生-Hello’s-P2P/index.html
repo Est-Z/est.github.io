@@ -17,7 +17,7 @@
 <meta property="og:locale" content="default">
 <meta property="og:image" content="https://est-c.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/2-1.png">
 <meta property="og:image" content="https://est-c.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/2-2.png">
-<meta property="og:updated_time" content="2018-12-30T08:03:32.009Z">
+<meta property="og:updated_time" content="2018-12-30T08:05:56.699Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="程序人生-Hello’s P2P">
 <meta name="twitter:description" content="哈尔滨工业大学计算机系统大作业，作者：1170300629 时志敏">
@@ -197,7 +197,8 @@
 <h3 id="1-4-本章小结"><a href="#1-4-本章小结" class="headerlink" title="1.4 本章小结"></a>1.4 本章小结</h3><p>介绍一些基本的东西，接下来我们就要解剖hello运行的整个过程了。</p>
 <h2 id="第2章-预处理"><a href="#第2章-预处理" class="headerlink" title="第2章 预处理"></a>第2章 预处理</h2><h3 id="2-1-预处理的概念与作用"><a href="#2-1-预处理的概念与作用" class="headerlink" title="2.1 预处理的概念与作用"></a>2.1 预处理的概念与作用</h3><h4 id="2-1-1概念"><a href="#2-1-1概念" class="headerlink" title="2.1.1概念"></a>2.1.1概念</h4><p>顾名思义，预处理就是在程序编译之前的处理。主要有三方面的内容，包括：宏定义、文件包含、条件编译。<br>宏定义：将#define标识的变量和函数进行替换。<br>文件包含：将#include标识的头文件调用出来。头文件通常用.h作为扩展名。对头文件也要预处理，也就是说头文件的宏定义、文件包含、条件编译也要就行处理，这样层层嵌套不断扩大。所以我们预处理得到的文件大小可能是源文件大小的数倍。<br>条件编译：通过一些特定符号（例如：#ifdef、#else、#endif）来处理条件分支语句，使其部分程序段在条件满足时再编译。</p>
 <h4 id="2-1-2作用"><a href="#2-1-2作用" class="headerlink" title="2.1.2作用"></a>2.1.2作用</h4><p>预处理其作为源文件进入编译环节之前的重要操作，最主要的作用无疑就是方便编译器更好的执行编译功能。</p>
-<h3 id="2-2在Ubuntu下预处理的命令"><a href="#2-2在Ubuntu下预处理的命令" class="headerlink" title="2.2在Ubuntu下预处理的命令"></a>2.2在Ubuntu下预处理的命令</h3><p>命令：cpp hello.c &gt; hello.i<br><img src="/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/2-1.png" alt="&quot;hello.c的预处理指令执行&quot;"><br>图2-1 hello.c的预处理指令执行</p>
+<h3 id="2-2在Ubuntu下预处理的命令"><a href="#2-2在Ubuntu下预处理的命令" class="headerlink" title="2.2在Ubuntu下预处理的命令"></a>2.2在Ubuntu下预处理的命令</h3><p>命令：cpp hello.c &gt; hello.i<br><img src="/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/2-1.png" alt="&quot;hello.c的预处理指令执行&quot;"></p>
+<p><center>图2-1 hello.c的预处理指令执行</center></p>
 <h3 id="2-3-Hello的预处理结果解析"><a href="#2-3-Hello的预处理结果解析" class="headerlink" title="2.3 Hello的预处理结果解析"></a>2.3 Hello的预处理结果解析</h3><p><img src="/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/2-2.png" alt="hello.i文件中的main函数"><br>图2-2 hello.i文件中的main函数<br>这便是我用gedit打开的hello.i文件，也就是预处理之后的文件。一番寻找之后我在文件的最后找到了我们源文件编写的hello.c。可以看到没什么太大的变化，但是#include标识的头文件引用不见了，#define标识的宏常量也不见了。之前我们在2.1部分已经较为详细的介绍了预处理具体要做什么，主要是三件事：宏定义处理、文件包含处理、条件编译处理。对应到这个hello.i可以发现，原来有的三个头文件stdio.h、unistd.h、stdlib.h被扩展成了三千多行的一大坨。里面的#define定义也都不见了，还出现了许多#ifdef、#else、#endif等来分割程序块，帮助进行条件编译。</p>
 <h3 id="2-4-本章小结"><a href="#2-4-本章小结" class="headerlink" title="2.4 本章小结"></a>2.4 本章小结</h3><p>编译器为了让程序员可以更加方便地编写代码，做了很多妥协，自己承受了很多委屈。而预处理就是委屈的一些体现，在这里编译器做一些必要的还原工作，为下一步大刀阔斧的处理备好了材料。</p>
 <h2 id="第3章-编译"><a href="#第3章-编译" class="headerlink" title="第3章 编译"></a>第3章 编译</h2><h3 id="3-1-编译的概念与作用"><a href="#3-1-编译的概念与作用" class="headerlink" title="3.1 编译的概念与作用"></a>3.1 编译的概念与作用</h3><h4 id="3-1-1概念"><a href="#3-1-1概念" class="headerlink" title="3.1.1概念"></a>3.1.1概念</h4><p>此处的编译主要是指狭义的编译，即编译器将hello.i转换成hello.s的过程。这个过程主要有五个步骤：<br>    （1）词法分析：词法分析的任务是对由字符组成的单词进行处理，从左至右逐个字符地对源程序进行扫描，产生一个个的单词符号，把作为字符串的源程序改造成为单词符号串的中间程序。执行词法分析的程序称为词法分析程序或扫描器。<br>（2）语法分析：编译程序的语法分析器以单词符号作为输入，分析单词符号串是否形成符合语法规则的语法单位，如表达式、赋值、循环等，最后看是否构成一个符合要求的程序，按该语言使用的语法规则分析检查每条语句是否有正确的逻辑结构，程序是最终的一个语法单位。编译程序的语法规则可用上下文无关文法来刻画。<br>（3）生成中间代码：中间代码是源程序的一种内部表示，或称中间语言。中间代码的作用是可使编译程序的结构在逻辑上更为简单明确，特别是可使目标代码的优化比较容易实现中间代码，即为中间语言程序，中间语言的复杂性介于源程序语言和机器语言之间。中间语言有多种形式，常见的有逆波兰记号、四元式、三元式和树。<br>（4）代码优化：代码优化是指对程序进行多种等价变换，使得从变换后的程序出发，能生成更有效的目标代码。所谓等价，是指不改变程序的运行结果。所谓有效，主要指目标代码运行时间较短，以及占用的存储空间较小。这种变换称为优化。GCC编译器可以提供不同等级的优化。<br>（5）生成目标代码：目标代码生成是编译的最后一个阶段。目标代码生成器把语法分析后或优化后的中间代码变换成目标代码。</p>
@@ -642,7 +643,7 @@
 
             <div class="post-copyright">
     <div class="content">
-        <p>最后更新： 2018年12月30日 16:03</p>
+        <p>最后更新： 2018年12月30日 16:05</p>
         <p>原始链接： <a class="post-url" href="/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/" title="程序人生-Hello’s P2P">https://Est-C.coding.me/Est-C.coding.me/2018/12/30/程序人生-Hello’s-P2P/</a></p>
         <footer>
             <a href="https://Est-C.coding.me/Est-C.coding.me">
