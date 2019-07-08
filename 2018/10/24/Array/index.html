@@ -13,7 +13,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
   <title>
     
-      malloc() and free() | Est
+      Array | Est
     
   </title>
   <meta name="author" content="Est">
@@ -160,7 +160,7 @@
 	<!-- Page title -->
 	<p>
 		
-			当前文章&nbsp;:&nbsp;《malloc() and free()》
+			当前文章&nbsp;:&nbsp;《Array》
 		
 	</p>
 
@@ -277,8 +277,8 @@
 	<div class="article-title">
 		<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
 		
-	<a href="/Est-C.coding.me/2018/10/23/malloc-and-free/" itemprop="url">
-		malloc() and free()
+	<a href="/Est-C.coding.me/2018/10/24/Array/" itemprop="url">
+		Array
 	</a>
 
 	</div>
@@ -291,9 +291,9 @@
 
 	发布于
 
-	<a href="/Est-C.coding.me/2018/10/23/malloc-and-free/" itemprop="url">
-		<time datetime="2018-10-23T15:53:43.000Z" itemprop="datePublished">
-	  		2018-10-23
+	<a href="/Est-C.coding.me/2018/10/24/Array/" itemprop="url">
+		<time datetime="2018-10-24T07:17:02.000Z" itemprop="datePublished">
+	  		2018-10-24
 	  </time>
 	</a>
 	&nbsp;
@@ -309,9 +309,9 @@
 
 	更新于
 
-	<a href="/Est-C.coding.me/2018/10/23/malloc-and-free/" itemprop="url">
-		<time datetime="2018-10-23T15:53:43.000Z" itemprop="dateUpdated">
-	  		2018-10-24
+	<a href="/Est-C.coding.me/2018/10/24/Array/" itemprop="url">
+		<time datetime="2018-10-24T07:17:02.000Z" itemprop="dateUpdated">
+	  		2019-07-08
 	  </time>
 	</a> 
 
@@ -322,8 +322,8 @@
 			<i class="fa fa-tags"></i>
 			
 	
-		<a href="/Est-C.coding.me/tags/C源码/" class=" ">
-			C源码
+		<a href="/Est-C.coding.me/tags/Array/" class=" ">
+			Array
 		</a>
 	
 		
@@ -336,17 +336,15 @@
 	</div>
 
 	<div class="article-content" id="article-content">
-		<p>malloc()函数与free()函数<br><a id="more"></a></p>
-<p>在介绍malloc()与free()之前，我们先看一下alloc()与afree()函数，了解内存地址运算</p>
-<h2 id="alloc-afree"><a href="#alloc-afree" class="headerlink" title="alloc()/afree()"></a>alloc()/afree()</h2><p>alloc()函数返回一个指向n个连续字符存储单元的指针<br>afree()函数释放已分配的存储空间</p>
-<p>这两个函数功能类是malloc()与free()，但它们是“不完善的”，因为alloc()与free()是以栈的方式（后进先出）进行存储空间管理的</p>
-<h3 id="alloc-与afree-的实现"><a href="#alloc-与afree-的实现" class="headerlink" title="alloc()与afree()的实现"></a>alloc()与afree()的实现</h3><p>alloc()是对一个大数组allocbuf中的空间进行分配</p>
-<p>allocbuf是alloc()与afree()的私有数组，并且在管理中并不需要数组下表，因此可以申明为static类型，使其不可见，实际使用过程中可用malloc申请一个指向无名存储块的指针获得</p>
-<p>allocbuf中使用指针allocp指向下一块可用空间：如果空间够，则alloc()返回allocp的值，不够则返回0</p>
-<p>如果p在allocbuf边界之内，则afree(p)仅仅是将allocp的值设置为p</p>
-<p><img src="/Est-C.coding.me/2018/10/23/malloc-and-free/1.PNG" alt="1"></p>
-<h3 id="源码"><a href="#源码" class="headerlink" title="源码"></a>源码</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#define ALLOCSIZE 10000</span></span><br><span class="line"></span><br><span class="line">static char allocbuf[ALLOCSIZE]; </span><br><span class="line">static char *allocp = allocbuf;</span><br><span class="line"></span><br><span class="line">char *alloc(int n)&#123;</span><br><span class="line">	<span class="keyword">if</span>(allocbuf + ALLOCSIZE-allocp &gt;=n)&#123;</span><br><span class="line">		allocp += n;</span><br><span class="line">		<span class="built_in">return</span> allocp - n;</span><br><span class="line">	&#125;<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">void afree(char *p)&#123;</span><br><span class="line">	<span class="keyword">if</span>( q &gt;= allocubuf &amp;&amp; p &lt; allocbuf + ALLOCSZIE)</span><br><span class="line">		alloc = p;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>continue……</p>
+		<p>This is blog to show Array.<br><a id="more"></a></p>
+<h2 id="Array"><a href="#Array" class="headerlink" title="Array"></a>Array</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#include&lt;stdio.h&gt;</span></span><br><span class="line"><span class="comment">#include&lt;stdarg.h&gt;		//提供宏va_start、va_arg、va_end </span></span><br><span class="line"><span class="comment">#include&lt;stdlib.h&gt;		//变长参数列表需要 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define ERROR 0</span></span><br><span class="line"><span class="comment">#define OK 1</span></span><br><span class="line"><span class="comment">#define TRUE 1</span></span><br><span class="line"><span class="comment">#define FALSE 0</span></span><br><span class="line"><span class="comment">#define OVERFLOW -1 </span></span><br><span class="line"><span class="comment">#define UNDEFLOW -2 </span></span><br><span class="line"></span><br><span class="line"><span class="comment">#define MAX_ARRAY_DIM 8 		//维数最大为8</span></span><br><span class="line"></span><br><span class="line">typedef int ElemType; </span><br><span class="line">typedef int Status;</span><br><span class="line"></span><br><span class="line">typedef struct&#123;</span><br><span class="line">	ElemType * base;		//数组元素基址 由InitArray分配</span><br><span class="line">	int dim;			//维数 </span><br><span class="line">	int * bounds;		//数组维界基址 由InitArray分配 eg:bounds[0]=3,bounds[1]=4,bounds[2]=2,表示3页4行2列的数组 </span><br><span class="line">	int * constants;		//数组映像函数常量基址 由InitArray分配</span><br><span class="line">		/*</span><br><span class="line">		定位作用 </span><br><span class="line">		对于3页4行2列的数组,跨越一页8个元素，一行2个元素，一列1个元素</span><br><span class="line">		这样给定一个下标A[2][3][1],2*8+2*3+1=23,再根据基地址base就可找到A[2][3][1]的地址</span><br><span class="line">		可以看出最后一维肯定是1即constants[dim-1] = 1（跨越最后一维只需要移动一个元素） </span><br><span class="line">		*/ </span><br><span class="line">&#125;Array;</span><br><span class="line"></span><br><span class="line">Status InitArray(Array &amp;A,int dim,...);		//若维数dim和各维长度均合法 构造A</span><br><span class="line">Status DestoryArray(Array &amp;A);		//销毁数组A</span><br><span class="line">Status Value(Array A,ElemType &amp;e,...);		//e返回指定下标的值</span><br><span class="line">Status Assign(Array &amp;A,ElemType e,...); 		//e的值赋给指定位置</span><br><span class="line">Status Locate(Array A,va_list ap,int &amp;off);		//ap指示的下标合法 则求出该元素在A中相对地址off</span><br></pre></td></tr></table></figure>
+<h3 id="InitArray"><a href="#InitArray" class="headerlink" title="InitArray"></a>InitArray</h3><p><img src="/Est-C.coding.me/2018/10/24/Array/1.PNG" alt="1"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line">//若维数dim和各维长度均合法 构造A</span><br><span class="line">Status InitArray(Array &amp;A,int dim,...)&#123;</span><br><span class="line">	</span><br><span class="line">	int elemtotal = 1;		//A的总元素 累加 </span><br><span class="line">	va_list ap;			//ap为存放变长参数表信息的数组 </span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( dim&lt;1 || dim&gt;MAX_ARRAY_DIM )			//dim是否合法 </span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">	</span><br><span class="line">	A.dim = dim;			//维度赋值 </span><br><span class="line">	A.bounds = (int *)malloc(dim * sizeof(int));		//数组维界地址赋值 </span><br><span class="line">	<span class="keyword">if</span>(!A.bounds)</span><br><span class="line">		<span class="built_in">exit</span>(OVERFLOW);</span><br><span class="line">	</span><br><span class="line">	va_start(ap,dim);		//从dim开始读取参数 </span><br><span class="line">	</span><br><span class="line">	int i;</span><br><span class="line">	<span class="keyword">for</span>(i=0;i&lt;dim;i++)&#123;</span><br><span class="line">		A.bounds[i] = va_arg(ap,int);		//逐一将参数赋值给A.bounds[i]</span><br><span class="line">		<span class="keyword">if</span>(A.bounds&lt;0)</span><br><span class="line">			<span class="built_in">return</span> UNDEFLOW;		//下溢出 </span><br><span class="line">		elemtotal *= A.bounds[i]; 			//改变元素个数 </span><br><span class="line">	&#125; </span><br><span class="line">	</span><br><span class="line">	va_end(ap);		//结束提取变长参数</span><br><span class="line">	</span><br><span class="line">	A.base = (ElemType*)malloc(elemtotal*sizeof(ElemType));			//申请数组需要的空间 </span><br><span class="line">	<span class="keyword">if</span>(!A.base)</span><br><span class="line">		 <span class="built_in">exit</span>(OVERFLOW);</span><br><span class="line">		 </span><br><span class="line">	A.constants = (int*)malloc(dim*sizeof(int));</span><br><span class="line">	<span class="keyword">if</span>(!A.constants)		//动态分配数组偏移量基址</span><br><span class="line">		<span class="built_in">exit</span>(OVERFLOW);</span><br><span class="line">		 </span><br><span class="line">	A.constants[dim - 1] = 1;		//最后一维的偏移量为1</span><br><span class="line">    	<span class="keyword">for</span> ( i = dim - 2; i &gt;= 0; i--)</span><br><span class="line">        	A.constants[i] = A.bounds[i + 1] * A.constants[i + 1];		//每一维的偏移量</span><br><span class="line">        </span><br><span class="line">    <span class="built_in">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="DestoryArray"><a href="#DestoryArray" class="headerlink" title="DestoryArray"></a>DestoryArray</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//销毁数组A</span><br><span class="line">Status DestoryArray(Array &amp;A)&#123;</span><br><span class="line">	//依次释放A.base A.bounds A.constants指针 </span><br><span class="line">	<span class="keyword">if</span>(!A.base)</span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">	free(A.base); </span><br><span class="line">	A.base = NULL;</span><br><span class="line">	<span class="keyword">if</span>(!A.bounds)</span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">	free(A.bounds);</span><br><span class="line">	A.bounds = NULL; </span><br><span class="line">	<span class="keyword">if</span>(!A.constants)</span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">	free(A.constants);</span><br><span class="line">	A.constants = NULL;</span><br><span class="line">	 </span><br><span class="line">	<span class="built_in">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Locate"><a href="#Locate" class="headerlink" title="Locate"></a>Locate</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">//ap指示的下标合法 则求出该元素在A中相对地址off</span><br><span class="line">Status Locate(Array A,va_list ap,int &amp;off)&#123;</span><br><span class="line">	</span><br><span class="line">	off = 0;</span><br><span class="line">	int i = 0,ind;</span><br><span class="line">	</span><br><span class="line">	for( i=0 ; i&lt;A.dim ; i++)&#123;</span><br><span class="line">		ind = va_arg(ap,int);</span><br><span class="line">		if(ind&lt;0 || ind&gt;=A.bounds[i])		//下表越界 </span><br><span class="line">			return OVERFLOW;</span><br><span class="line">		off += A.constants[i] * ind; 	// 每一维下表乘偏移量 </span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	return OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Value"><a href="#Value" class="headerlink" title="Value"></a>Value</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//e返回指定下标的值</span><br><span class="line">Status Value(Array A,ElemType &amp;e,...)&#123;</span><br><span class="line">	</span><br><span class="line">	int result,off;</span><br><span class="line">	va_list ap;			//ap为va_list类型 是存放变长参数信息表的数值 </span><br><span class="line">	</span><br><span class="line">	va_start(ap,e);</span><br><span class="line">	<span class="keyword">if</span>((result = Locate(A,ap,off)&lt;=0))		//下标越界 </span><br><span class="line">		<span class="built_in">return</span> result;</span><br><span class="line">	</span><br><span class="line">	e = *(A.base + off);			//e返回指定值 </span><br><span class="line">	<span class="built_in">return</span> OK; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="Assign"><a href="#Assign" class="headerlink" title="Assign"></a>Assign</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">//e的值赋给指定位置</span><br><span class="line">Status Assign(Array &amp;A,ElemType e,...)&#123;</span><br><span class="line">	</span><br><span class="line">	int result,off;</span><br><span class="line">	va_list ap;</span><br><span class="line">	</span><br><span class="line">	va_start(ap,e);</span><br><span class="line">	<span class="keyword">if</span>((result = Locate(A,ap,off)&lt;=0))		//下标越界 </span><br><span class="line">		<span class="built_in">return</span> result;</span><br><span class="line">		</span><br><span class="line">	*(A.base + off) = e;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="main"><a href="#main" class="headerlink" title="main"></a>main</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">int <span class="function"><span class="title">main</span></span>()&#123;</span><br><span class="line">	</span><br><span class="line">	Array A;	</span><br><span class="line">	ElemType e;	</span><br><span class="line">	InitArray(A,3,3,4,2);//3维数组，3页4行2列	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"%d %d %d\n"</span>,A.constants[0],A.constants[1],A.constants[2]);	</span><br><span class="line">	Assign(A,-8,2,3,1);	</span><br><span class="line">	Value(A,e,2,3,1);	</span><br><span class="line">	<span class="built_in">printf</span>(<span class="string">"这个元素为%d"</span>,e);	</span><br><span class="line"></span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 	
 	</div>
 	
@@ -365,12 +363,12 @@
 	<span>
 		<a href="javascript: window.scrollTo(0, 0);">返回顶部</a>
 		
-			<a href="/Est-C.coding.me/2018/10/24/Array/" title="Array" rel="prev">
+			<a href="/Est-C.coding.me/2018/10/26/排序算法/" title="排序算法" rel="prev">
 				&laquo;上一篇
 			</a>
 		
 		
-			<a href="/Est-C.coding.me/2018/10/21/String/" title="String" rel="next">
+			<a href="/Est-C.coding.me/2018/10/23/malloc-and-free/" title="malloc() and free()" rel="next">
 				下一篇&raquo;
 			</a>
 			
@@ -388,6 +386,30 @@
 <div class="relate-post">
 	
 		<ul>
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/Est-C.coding.me/2018/10/21/String/" title="String">
+								String			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								十月 21日, 2018				
+							</p>
+							<p class="relate-post-content">
+								This is a blog to show SString.
+StringSString12345678910111213141516171819#define MAXSTRLEN 255		//用户可在255以内定义最大串长 ty...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/Est-C.coding.me/2018/10/21/String/" title="String">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="String"/>
+							</a>
+						</div>
+					</li>											
+			
 			
 					<li>
 						<div class="relate-post-text">
@@ -465,47 +487,24 @@ SparseMatrix稀疏矩阵
 			
 					<li>
 						<div class="relate-post-text">
-							<a class="relate-post-title" href="/Est-C.coding.me/2018/10/24/Array/" title="Array">
-								Array			
+							<a class="relate-post-title" href="/Est-C.coding.me/2018/10/23/malloc-and-free/" title="malloc() and free()">
+								malloc() and free()			
 							</a>
 							<p class="relate-post-date">
 								<i class="fa fa-calendar"></i>
-								十月 24日, 2018				
+								十月 23日, 2018				
 							</p>
 							<p class="relate-post-content">
-								This is blog to show Array.
-Array12345678910111213141516171819202122232425262728293031323334#include&lt;stdio.h&gt;#i...
+								malloc()函数与free()函数
+在介绍malloc()与free()之前，我们先看一下alloc()与afree()函数，了解内存地址运算
+alloc()/afree()alloc()函数返回一个指向n个连续字符存储单元的指针...
 							</p>
 						</div>
 
 						<div class="relate-post-cover">
-							<a href="/Est-C.coding.me/2018/10/24/Array/" title="Array">				
+							<a href="/Est-C.coding.me/2018/10/23/malloc-and-free/" title="malloc() and free()">				
 								
-								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="Array"/>
-							</a>
-						</div>
-					</li>											
-			
-			
-					<li>
-						<div class="relate-post-text">
-							<a class="relate-post-title" href="/Est-C.coding.me/2018/10/21/String/" title="String">
-								String			
-							</a>
-							<p class="relate-post-date">
-								<i class="fa fa-calendar"></i>
-								十月 21日, 2018				
-							</p>
-							<p class="relate-post-content">
-								This is a blog to show SString.
-StringSString12345678910111213141516171819#define MAXSTRLEN 255		//用户可在255以内定义最大串长 ty...
-							</p>
-						</div>
-
-						<div class="relate-post-cover">
-							<a href="/Est-C.coding.me/2018/10/21/String/" title="String">				
-								
-								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="String"/>
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="malloc() and free()"/>
 							</a>
 						</div>
 					</li>											
