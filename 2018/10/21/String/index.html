@@ -1,0 +1,909 @@
+<!--
+	作者：Sariay
+	时间：2018-09-25
+	描述：There may be a bug, but don't worry, QiLing(器灵) says that it can work normally!
+-->
+<!DOCTYPE html>
+<html class="html-loading">
+		
+
+<head>
+	<meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=no">
+  <title>
+    
+      String | Est
+    
+  </title>
+  <meta name="author" content="Est">
+  <meta name="keywords" content="" />
+  <meta name="description" content="" />
+	<!-- favicon -->
+  <link rel="shortcut icon" href="/Est-C.coding.me/img/favicon.ico">
+
+  <!-- css -->
+  <link rel="stylesheet" href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/Est-C.coding.me/css/Annie.css">
+  
+  <!-- jquery -->
+	<script src="/Est-C.coding.me/js/jquery.min.js"></script>
+
+  <!-- leancloud -->
+  <script src="https://cdn1.lncld.net/static/js/av-core-mini-0.6.4.js"></script>
+<script src="/Est-C.coding.me/js/leancloud.js"></script>
+</head>
+	<body>
+		<!-- Preloader -->
+
+	<div id="preloader">
+		<div class="pre-container">
+			
+				<div class="spinner">
+					<div class="double-bounce1"></div>
+					<div class="double-bounce2"></div>
+				</div>
+						
+		</div>
+	</div>
+
+
+<!-- header -->
+<header class="fixbackground" data-img-mode="random" data-normal-src="/Est-C.coding.me/img/1.jpg" data-random-max="4" data-random-src="/Est-C.coding.me/img/Random-img/">
+	<div class="mask">
+		<!-- Logo and navigation -->
+		<div class="h-header">
+			<div id="logo">
+				<a href="/">
+						
+						<img src="/Est-C.coding.me/img/logo.png" alt="Logo">
+					
+				</a>
+			</div>
+			
+			<div id="navigation-show">
+				<ul>
+	
+		<li class="menu-home">
+			<a href="/Est-C.coding.me/" class="menu-item-home">主页</a>
+		</li>
+	
+		<li class="menu-archive">
+			<a href="/Est-C.coding.me/archives" class="menu-item-archive">归档</a>
+		</li>
+	
+		<li class="menu-categories">
+			<a href="/Est-C.coding.me/categories" class="menu-item-categories">分类</a>
+		</li>
+	
+		<li class="menu-tags">
+			<a href="/Est-C.coding.me/tags" class="menu-item-tags">标签</a>
+		</li>
+	
+		<li class="menu-about">
+			<a href="/Est-C.coding.me/about" class="menu-item-about">关于</a>
+		</li>
+	
+		<li class="menu-gallery">
+			<a href="/Est-C.coding.me/gallery" class="menu-item-gallery">相册</a>
+		</li>
+	
+
+	
+</ul>
+			</div>				
+		</div>
+
+		<!-- motto -->
+		<div class="h-body">	
+			
+				<p class="motto"></p>
+			
+		</div>
+		
+		<!-- others: such as time... -->			
+		<div class="h-footer">
+			<a href="javascript:;" id="read-more"><i class="fa fa-angle-double-down" aria-hidden="true"></i>
+			</a>
+
+			
+				<!-- 
+	This is only a demo, please go to "https://time.is" to set your city time! 
+-->
+<style type="text/css">
+	.header-date {
+		font-size: 1.6rem;
+		color: #fff;
+		position: absolute;
+		bottom: 5px;
+		right: 1rem;
+		writing-mode: tb-rl;
+	}	
+	
+	.header-date a {
+		border-bottom: none;
+	}
+
+	@media only screen and (max-width: 768 ) {
+		.header-date {
+			font-size: 1rem;
+		}			
+	}
+</style>
+<div class="header-date">
+	<a href="https://time.is/Beijing" id="time_is_link" rel="nofollow" ></a>
+	<span id="Beijing_z43d"></span>
+</div>
+<script src="//widget.time.is/zh.js"></script>
+<script>
+	time_is_widget.init({
+		Beijing_z43d:{
+			template:"DATE", 
+			date_format:"year年 monthname dnum日"
+		}
+	});
+</script>
+			
+		</div>
+	</div>
+</header>
+
+<div id="navigation-hide">
+	<!-- Progress bar -->
+	<div id="progress-bar"></div>
+
+	<!-- Progress percent -->
+	<div id="progress-percentage"><h1>0.0%</h1></div>
+
+	<div class="toc-switch"><span class="switch-button">目录</span></div>
+
+	<!-- Page title -->
+	<p>
+		
+			当前文章&nbsp;:&nbsp;《String》
+		
+	</p>
+
+	<!-- Nav trigger for navigation-H-->
+	<a class="nav-trigger"><span></span></a>
+</div>
+
+<!-- Navigation in div(id="navigation-H") -->
+<nav class="nav-container" id="cd-nav">
+	<div class="nav-header">
+		<h3>Navigation</h3>
+		<a href="javascript:;" class="nav-close"></a>
+	</div>
+	<div class="nav-body">
+		<ul>
+	
+		<li class="menu-home">
+			<a href="/Est-C.coding.me/" class="menu-item-home">主页</a>
+		</li>
+	
+		<li class="menu-archive">
+			<a href="/Est-C.coding.me/archives" class="menu-item-archive">归档</a>
+		</li>
+	
+		<li class="menu-categories">
+			<a href="/Est-C.coding.me/categories" class="menu-item-categories">分类</a>
+		</li>
+	
+		<li class="menu-tags">
+			<a href="/Est-C.coding.me/tags" class="menu-item-tags">标签</a>
+		</li>
+	
+		<li class="menu-about">
+			<a href="/Est-C.coding.me/about" class="menu-item-about">关于</a>
+		</li>
+	
+		<li class="menu-gallery">
+			<a href="/Est-C.coding.me/gallery" class="menu-item-gallery">相册</a>
+		</li>
+	
+
+	
+</ul>
+	</div>
+	<div class="nav-footer">
+		<ul>
+	
+		<li>
+			<a href="//github.com/Est-Z" target="_blank">
+				<i class="fa fa-github"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<i class="fa fa-weibo"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<i class="fa fa-pinterest"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<i class="fa fa-instagram"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<i class="fa fa-twitter"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/Est-C.coding.me/atom.xml" target="_blank">
+				<i class="fa fa-rss"></i>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+</nav>
+			
+		<!--main-->
+		<main>
+			<!--
+	时间：2018-11-17
+	描述：
+		插件名称：katelog.min.js
+		插件作者：KELEN
+		插件来源: https://github.com/KELEN/katelog
+-->
+
+	
+		<div class="layout-toc">
+			<div id="layout-toc">
+				<div class="k-catelog-list" id="catelog-list" data-title="文章目录"></div>
+			</div>
+		</div>
+
+		
+		<script src="/Est-C.coding.me/plugin/toc/katelog.min.js"></script>
+
+		
+	 
+
+<div class="layout-post">
+	<div id="layout-post">
+	<div class="article-title">
+		<i class="fa fa-paper-plane-o" aria-hidden="true"></i>
+		
+	<a href="/Est-C.coding.me/2018/10/21/String/" itemprop="url">
+		String
+	</a>
+
+	</div>
+
+	<div class="article-meta">
+		<span>
+			<i class="fa fa-calendar"></i>
+			
+
+
+	发布于
+
+	<a href="/Est-C.coding.me/2018/10/21/String/" itemprop="url">
+		<time datetime="2018-10-21T14:30:41.000Z" itemprop="datePublished">
+	  		2018-10-21
+	  </time>
+	</a>
+	&nbsp;
+
+
+
+
+
+			
+
+
+
+
+	更新于
+
+	<a href="/Est-C.coding.me/2018/10/21/String/" itemprop="url">
+		<time datetime="2018-10-21T14:30:41.000Z" itemprop="dateUpdated">
+	  		2019-07-08
+	  </time>
+	</a> 
+
+
+
+		</span>
+		<span>
+			<i class="fa fa-tags"></i>
+			
+	
+		<a href="/Est-C.coding.me/tags/String/" class=" ">
+			String
+		</a>
+	
+		
+		</span>
+		
+		
+
+
+
+	</div>
+
+	<div class="article-content" id="article-content">
+		<p>This is a blog to show SString.<br><a id="more"></a></p>
+<h2 id="String"><a href="#String" class="headerlink" title="String"></a>String</h2><h3 id="SString"><a href="#SString" class="headerlink" title="SString"></a>SString</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">#define MAXSTRLEN 255		//用户可在255以内定义最大串长 </span></span><br><span class="line"></span><br><span class="line">typedef unsigned char SString[MAXSTRLEN + 1];		//0号单元存放串的长度 </span><br><span class="line">typedef int Status;</span><br><span class="line"></span><br><span class="line">void StrPrint(SString T) ;	// 输出字符串T</span><br><span class="line">Status StrAssign(SString &amp;T,char chars[]);	//生成一个其值等于chars的串T </span><br><span class="line">Status StrCopy(SString &amp;T,SString S);	//由串S赋值得串T</span><br><span class="line">Status ClearString(SString &amp;S);	//将串置空</span><br><span class="line">Status StrDestory(SString &amp;T);	//销毁</span><br><span class="line">Status StrEmpty(SString S);	//判空</span><br><span class="line">int StrCompare(SString S,SString T);	//S&gt;T 返回&gt;0 S=T 返回0 S&lt;T 返回&lt;0</span><br><span class="line">int StrLength(SString S);	//返回串长度</span><br><span class="line">Status Concat(SString &amp;T,SString S1,SString S2);	//连接串 S1S2 未截断返回 1 截断返回 0 </span><br><span class="line">Status SubString(SString &amp;Sub,SString S,int pos,int len);	//用Sub返回串S的自第pos个字符起长度为len的子串</span><br><span class="line">int Index(SString S,SString T,int pos);	//返回子串T在主串S中第pos个字符之后的位置 若不存在，则函数值为0</span><br><span class="line">Status StrInsert(SString &amp;S,int pos,SString T);	//在串S的第pos个字符前插入串T 完全插入返回1 部分插入返回0</span><br><span class="line">Status StrDelete(SString S,int pos,int len) ;	// 从串S中删除自第pos个字符起长度为len的子串</span><br><span class="line">Status Replace(SString &amp;S,SString T,SString V);	//用V替换主串S中出现的所有与T相等的不重叠的子串</span><br></pre></td></tr></table></figure>
+<h4 id="StrPrint"><a href="#StrPrint" class="headerlink" title="StrPrint"></a>StrPrint</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">// 输出字符串T</span><br><span class="line">void StrPrint(SString T) </span><br><span class="line">&#123; </span><br><span class="line">    int i; </span><br><span class="line">    <span class="keyword">for</span>(i=1;i&lt;=T[0];i++) </span><br><span class="line">        <span class="built_in">printf</span>(<span class="string">"%c"</span>,T[i]);  </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"\n"</span>); </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrAssign"><a href="#StrAssign" class="headerlink" title="StrAssign"></a>StrAssign</h4><p><img src="/Est-C.coding.me/2018/10/21/String/1.PNG" alt="1"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">//生成一个其值等于chars的串T </span><br><span class="line">Status StrAssign(SString &amp;T,char chars[])&#123;</span><br><span class="line">	</span><br><span class="line">	int i;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(strlen(chars) &gt; MAXSTRLEN)&#123;</span><br><span class="line">		<span class="built_in">printf</span>(<span class="string">"&gt;串长超过最大串长"</span>);</span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		T[0] = strlen(chars);		//T[0]存放串长度 </span><br><span class="line">		<span class="keyword">for</span>(i=1 ; i&lt;=T[0] ; i ++)</span><br><span class="line">			T[i] = *(chars+i-1);		//逐个赋值 </span><br><span class="line">		<span class="built_in">return</span> OK;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrCopy"><a href="#StrCopy" class="headerlink" title="StrCopy"></a>StrCopy</h4><p><img src="/Est-C.coding.me/2018/10/21/String/2.PNG" alt="2"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//由串S赋值得串T</span><br><span class="line">Status StrCopy(SString &amp;T,SString S)&#123;</span><br><span class="line">	</span><br><span class="line">	int i;</span><br><span class="line">	<span class="keyword">for</span>(i=0 ; i&lt;=S[0] ; i++)		//赋值(带0一起复制) </span><br><span class="line">		T[i] = S[i];</span><br><span class="line">	<span class="built_in">return</span> OK;</span><br><span class="line">	 </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ClearString"><a href="#ClearString" class="headerlink" title="ClearString"></a>ClearString</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//将串置空</span><br><span class="line">Status ClearString(SString &amp;S)&#123;</span><br><span class="line">	</span><br><span class="line">	S[1] = <span class="string">'\0'</span>; </span><br><span class="line">	S[0] = 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrDestory"><a href="#StrDestory" class="headerlink" title="StrDestory"></a>StrDestory</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">//销毁</span><br><span class="line">Status StrDestory(SString &amp;T)&#123;</span><br><span class="line">	</span><br><span class="line">	ClearString(T);</span><br><span class="line">	<span class="built_in">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrEmpty"><a href="#StrEmpty" class="headerlink" title="StrEmpty"></a>StrEmpty</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//判空</span><br><span class="line">Status StrEmpty(SString S)&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(S[0] == 0)			//0号存储字符串长度 </span><br><span class="line">		<span class="built_in">return</span> TRUE;</span><br><span class="line">	<span class="keyword">else</span></span><br><span class="line">		<span class="built_in">return</span> FALSE;</span><br><span class="line">			</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrCompare"><a href="#StrCompare" class="headerlink" title="StrCompare"></a>StrCompare</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">//S&gt;T 返回&gt;0 S=T 返回0 S&lt;T 返回&lt;0</span><br><span class="line">int StrCompare(SString S,SString T)&#123;</span><br><span class="line">	</span><br><span class="line">	int i;</span><br><span class="line">	<span class="keyword">for</span>( i=1 ; i&lt;=S[0]&amp;&amp;i&lt;=T[0] ; i++ )</span><br><span class="line">		<span class="keyword">if</span>(S[i] != T[i])			//不相等 返回ascll码差值 </span><br><span class="line">			<span class="built_in">return</span> S[i] - T[i];</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">return</span> S[0] - T[0];			//包含关系 返回长度差值 </span><br><span class="line">	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrLength"><a href="#StrLength" class="headerlink" title="StrLength"></a>StrLength</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">//返回串长度</span><br><span class="line">int StrLength(SString S)&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">return</span> S[0];</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Concat"><a href="#Concat" class="headerlink" title="Concat"></a>Concat</h4><p><img src="/Est-C.coding.me/2018/10/21/String/3.PNG" alt="3"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line">//连接串 S1S2 未截断返回 1 截断返回 0 </span><br><span class="line">Status Concat(SString &amp;T,SString S1,SString S2)&#123;</span><br><span class="line">	</span><br><span class="line">	int i,j;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( S1[0] + S2[0] &lt;= MAXSTRLEN)&#123;		//未截断 </span><br><span class="line">		T[0] = S1[0] + S2[0];</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">for</span>( i=1 ; i &lt;= S1[0] ; i++ )		//连接S1 </span><br><span class="line">			T[i] = S1[i];</span><br><span class="line">	</span><br><span class="line">		<span class="keyword">for</span>( j=1 ; j &lt;= S2[0] ; j++ )		//连接S2 </span><br><span class="line">			T[i++] = S2[j];</span><br><span class="line">	</span><br><span class="line">		<span class="built_in">return</span> OK;	</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;									//截断 </span><br><span class="line">		<span class="keyword">for</span>( i=1 ; i &lt;= S1[0] ; i++ )		//连接S1 </span><br><span class="line">			T[i] = S1[i];</span><br><span class="line">			</span><br><span class="line">		<span class="keyword">for</span>( j=1 ; i &lt;= MAXSTRLEN ; j++ )	//连接S2 </span><br><span class="line">			T[i++] = S2[j];</span><br><span class="line">		</span><br><span class="line">		T[0] = MAXSTRLEN;</span><br><span class="line">		<span class="built_in">return</span> FALSE;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="SubString"><a href="#SubString" class="headerlink" title="SubString"></a>SubString</h4><p><img src="/Est-C.coding.me/2018/10/21/String/4.PNG" alt="4"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">//用Sub返回串S的自第pos个字符起长度为len的子串</span><br><span class="line">Status SubString(SString &amp;Sub,SString S,int pos,int len)&#123;</span><br><span class="line">	</span><br><span class="line">	int i;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( pos&lt;1 || pos&gt;S[0] || len&lt;0 || len&gt;S[0]-pos+1)		//条件错误 </span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">	<span class="keyword">for</span>( i=1 ; i&lt;=len ; i++)		//赋值 </span><br><span class="line">		Sub[i] = S[pos+i-1];</span><br><span class="line">	Sub[0] = len;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Index"><a href="#Index" class="headerlink" title="Index"></a>Index</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">//返回子串T在主串S中第pos个字符之后的位置 若不存在，则函数值为0。 </span><br><span class="line">int Index(SString S,SString T,int pos)&#123;</span><br><span class="line">	//算法改进 --查找字符串 (KMP)</span><br><span class="line">	int i,n,m;</span><br><span class="line">	SString sub;</span><br><span class="line">	<span class="keyword">if</span>( 1&lt;=pos &amp;&amp; pos&lt;=S[0])&#123;		//位置合理 </span><br><span class="line">		n = S[0];</span><br><span class="line">		m = T[0];</span><br><span class="line">		i = pos;</span><br><span class="line">		<span class="keyword">while</span>( i &lt;= n-m+1 )&#123;</span><br><span class="line">			SubString(sub,S,i,m);</span><br><span class="line">			<span class="keyword">if</span>(StrCompare(sub,T) != 0)</span><br><span class="line">				i++;</span><br><span class="line">			<span class="keyword">else</span></span><br><span class="line">				<span class="built_in">return</span> i;</span><br><span class="line">		&#125;</span><br><span class="line">		</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrInsert"><a href="#StrInsert" class="headerlink" title="StrInsert"></a>StrInsert</h4><p><img src="/Est-C.coding.me/2018/10/21/String/5.PNG" alt="5"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line">//在串S的第pos个字符前插入串T 完全插入返回1 部分插入返回0 </span><br><span class="line">Status StrInsert(SString &amp;S,int pos,SString T)&#123;</span><br><span class="line">	</span><br><span class="line">	int i;</span><br><span class="line">	<span class="keyword">if</span>( pos&lt;1 || pos&gt;S[0]+1 )		//插入位置(1-S[0]+1) </span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">if</span>(S[0]+T[0]&lt;=MAXSTRLEN)&#123;		//完全插入 </span><br><span class="line">		<span class="keyword">for</span>( i=S[0]; i&gt;=pos ;i-- )</span><br><span class="line">			S[i+T[0]] = S[i];		//插入点后面的字符串向后位移Strlen(T)</span><br><span class="line">		<span class="keyword">for</span>( i=pos; i&lt;pos+T[0] ; i++)</span><br><span class="line">			S[i] = T[i-pos+1];</span><br><span class="line">		S[0] += T[0];</span><br><span class="line">		<span class="built_in">return</span> OK; </span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;					//部分插入 </span><br><span class="line">		<span class="keyword">for</span>( i=MAXSTRLEN;i&gt;=pos+T[0];i--)</span><br><span class="line">			S[i] = S[i-T[0]];</span><br><span class="line">		<span class="keyword">for</span>( i=pos;i&lt;pos+T[0] &amp;&amp; i&lt;=MAXSTRLEN;i++ )</span><br><span class="line">			S[i] = T[i-pos+1];</span><br><span class="line">		S[0] = MAXSTRLEN;</span><br><span class="line">		<span class="built_in">return</span> FALSE; </span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrDelete"><a href="#StrDelete" class="headerlink" title="StrDelete"></a>StrDelete</h4><p><img src="/Est-C.coding.me/2018/10/21/String/6.PNG" alt="6"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">// 从串S中删除自第pos个字符起长度为len的子串</span><br><span class="line">Status StrDelete(SString S,int pos,int len)&#123;</span><br><span class="line">	</span><br><span class="line">	int i;</span><br><span class="line">	<span class="keyword">if</span>( pos&lt;1 || pos&gt;S[0]-len+1 || len&lt;0)</span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">	<span class="keyword">for</span>( i=pos+len ; i&lt;=S[0];i++)</span><br><span class="line">		S[i-len] = S[i];</span><br><span class="line">	S[0] -= len;</span><br><span class="line">	<span class="built_in">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Replace"><a href="#Replace" class="headerlink" title="Replace"></a>Replace</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">//用V替换主串S中出现的所有与T相等的不重叠的子串 </span><br><span class="line">Status Replace(SString &amp;S,SString T,SString V)&#123;</span><br><span class="line">	</span><br><span class="line">	int i =1;		//第一个位置开始查找</span><br><span class="line">	</span><br><span class="line">	Status k;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(StrEmpty(T))		//T为空串 </span><br><span class="line">		<span class="built_in">return</span> ERROR; </span><br><span class="line">		</span><br><span class="line">	<span class="keyword">while</span>(i)&#123;</span><br><span class="line">		</span><br><span class="line">		i = Index(S,T,i);</span><br><span class="line">		<span class="keyword">if</span>(i)&#123;</span><br><span class="line">			StrDelete(S,i,StrLength(T));</span><br><span class="line">			k = StrInsert(S,i,V);</span><br><span class="line">			<span class="keyword">if</span>(!k)</span><br><span class="line">				<span class="built_in">return</span> ERROR;</span><br><span class="line">			i += StrLength(V);</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">return</span> OK;	</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Test"><a href="#Test" class="headerlink" title="Test"></a>Test</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">void <span class="function"><span class="title">text</span></span>()&#123;</span><br><span class="line">    int i,j; </span><br><span class="line">    Status k; </span><br><span class="line">    char s,c[MAXSTRLEN];</span><br><span class="line">    SString t,s1,s2,s3,s4,s5,s6,s7; </span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入串s1: "</span>); </span><br><span class="line">    gets(c); </span><br><span class="line">    k=StrAssign(s1,c); </span><br><span class="line">   </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"串长为%d 串空否？%d(1:是0:否)\n"</span>,StrLength(s1),StrEmpty(s1)); </span><br><span class="line">    StrCopy(s3,s1); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"拷贝s1生成的串为"</span>); </span><br><span class="line">    StrPrint(s3); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入串s2: "</span>); </span><br><span class="line">    gets(c); </span><br><span class="line">    k=StrAssign(s2,c); </span><br><span class="line">    StrPrint(s2); </span><br><span class="line">    </span><br><span class="line">    Concat(t,s1,s2);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"连接s1s2为t："</span>);</span><br><span class="line">    StrPrint(t);</span><br><span class="line">    </span><br><span class="line">    SubString(s4,t,2,4);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"t的字串 2-4 为："</span>);</span><br><span class="line">    StrPrint(s4);</span><br><span class="line">	</span><br><span class="line">    StrDelete(t,3,3);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"删除t的字串 3-3后："</span>);</span><br><span class="line">    StrPrint(t); </span><br><span class="line">	</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入插入串: "</span>); </span><br><span class="line">    gets(c); </span><br><span class="line">    k=StrAssign(s5,c); </span><br><span class="line">    StrInsert(t,3,s5);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"在第三个位置插入后t为："</span>);</span><br><span class="line">	StrPrint(t); </span><br><span class="line">    </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入替换串: "</span>); </span><br><span class="line">    gets(c);</span><br><span class="line">    k=StrAssign(s6,c);</span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"请输入要替换串: "</span>);</span><br><span class="line">	gets(c); </span><br><span class="line">    k=StrAssign(s7,c);</span><br><span class="line">    Replace(t,s7,s6); </span><br><span class="line">    <span class="built_in">printf</span>(<span class="string">"替换后t为："</span>);</span><br><span class="line">	 StrPrint(t);</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">int <span class="function"><span class="title">main</span></span>()&#123;</span><br><span class="line">	</span><br><span class="line">	SString T,S;</span><br><span class="line">	char chars[] = <span class="string">"this is"</span>; </span><br><span class="line">	</span><br><span class="line">	text();</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="HString"><a href="#HString" class="headerlink" title="HString"></a>HString</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">typedef struct&#123;</span><br><span class="line">	char * ch;</span><br><span class="line">	int length;</span><br><span class="line">&#125;HString;</span><br></pre></td></tr></table></figure>
+<p><img src="/Est-C.coding.me/2018/10/21/String/HString.PNG" alt="1"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Status StrAssign(HString &amp;T,char *chars);	//生成一个其值等于串常量chars的串T</span><br><span class="line">int StrLength(HString S);	//返回S元素个数 即串S的长度</span><br><span class="line">int StrCompare(HString S,HString T);	//S&gt;T 返回大于0 S&lt;T 返回小于0</span><br><span class="line">Status ClearString(HString &amp;S);		//将S变为空串	并释放S所占空间</span><br><span class="line">Status Concat(HString &amp;T,HString S1,HString S2);	//T返回S1与S2连接而成的串</span><br><span class="line">Status SubString(HString &amp;Sub,HString S,int pos,int len);	//返回串S第pos个元素起长度为len的字串</span><br></pre></td></tr></table></figure>
+<h4 id="StrAssign-1"><a href="#StrAssign-1" class="headerlink" title="StrAssign"></a>StrAssign</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line">//生成一个其值等于串常量chars的串T</span><br><span class="line">Status StrAssign(HString &amp;T,char *chars)&#123;</span><br><span class="line">	int i,j;</span><br><span class="line">	char *c;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(T.ch)		//释放T原有空间 </span><br><span class="line">		free(T.ch);</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">for</span>(i=0,c=chars;*c;i++,c++) ;	//求chars长度</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(!i)&#123;</span><br><span class="line">		T.ch = NULL;</span><br><span class="line">		T.length = 0;</span><br><span class="line">	&#125; <span class="keyword">else</span>&#123;</span><br><span class="line">		<span class="keyword">if</span>(!(T.ch = (char*)malloc(i*sizeof(char))))		//申请失败 </span><br><span class="line">			<span class="built_in">return</span> ERROR;</span><br><span class="line">		<span class="keyword">for</span>(j=0 ; j&lt;i ; j++)		//复制 </span><br><span class="line">			T.ch[j] = chars[j];	</span><br><span class="line">	&#125;</span><br><span class="line">	<span class="built_in">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrLength-1"><a href="#StrLength-1" class="headerlink" title="StrLength"></a>StrLength</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">//返回S元素个数 即串S的长度</span><br><span class="line">int StrLength(HString S)&#123;</span><br><span class="line">	<span class="built_in">return</span> S.length; </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="StrCompare-1"><a href="#StrCompare-1" class="headerlink" title="StrCompare"></a>StrCompare</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//S&gt;T 返回大于0 S&lt;T 返回小于0</span><br><span class="line">int StrCompare(HString S,HString T)&#123;</span><br><span class="line">	int i;</span><br><span class="line">	<span class="keyword">for</span>(i=0 ; i&lt;S.length &amp;&amp; i&lt;T.length ; i++)</span><br><span class="line">		<span class="keyword">if</span>(S.ch[i] != T.ch[i])</span><br><span class="line">			<span class="built_in">return</span> S.ch[i] - T.ch[i];</span><br><span class="line">			</span><br><span class="line">	<span class="built_in">return</span> S.length - T.length;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="ClearString-1"><a href="#ClearString-1" class="headerlink" title="ClearString"></a>ClearString</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">//将S变为空串	并释放S所占空间</span><br><span class="line">Status ClearString(HString &amp;S)&#123;</span><br><span class="line">	<span class="keyword">if</span>(S.ch)&#123;</span><br><span class="line">		free(S.ch);</span><br><span class="line">		S.ch = NULL;</span><br><span class="line">	&#125;</span><br><span class="line">	S.length = 0;</span><br><span class="line">	<span class="built_in">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="Concat-1"><a href="#Concat-1" class="headerlink" title="Concat"></a>Concat</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">//T返回S1与S2连接而成的串</span><br><span class="line">Status Concat(HString &amp;T,HString S1,HString S2)&#123;</span><br><span class="line">	int i,j;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(T.ch)</span><br><span class="line">		free(T.ch);</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(!(T.ch = (char*)malloc((S1.length+S2.length)*sizeof(char))))</span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">	 </span><br><span class="line">	<span class="keyword">for</span>( i=0 ; i&lt;S1.length ; i++)</span><br><span class="line">	 	T.ch[i] = S1.ch[i];</span><br><span class="line">	<span class="keyword">for</span>( j=0 ; j&lt;S2.length ; j++)</span><br><span class="line">		T.ch[i++] = S2.ch[j];</span><br><span class="line">	T.length = S1.length + S2.length;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">return</span> OK;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="SubString-1"><a href="#SubString-1" class="headerlink" title="SubString"></a>SubString</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line">//返回串S第pos个元素起长度为len的字串 </span><br><span class="line">Status SubString(HString &amp;Sub,HString S,int pos,int len)&#123;</span><br><span class="line">	</span><br><span class="line">	int i;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>( pos&lt;1 || pos&gt;S.length || len&lt;0 || len&gt;S.length-pos+1 )		//条件错误 </span><br><span class="line">		<span class="built_in">return</span> ERROR;</span><br><span class="line">	</span><br><span class="line">	<span class="keyword">if</span>(Sub.ch)		//释放Sub原有空间 </span><br><span class="line">		free(Sub.ch);</span><br><span class="line">		</span><br><span class="line">	<span class="keyword">if</span>(!len)&#123;		//字串长度为0 </span><br><span class="line">		Sub.ch = NULL;</span><br><span class="line">		Sub.length = 0;</span><br><span class="line">	&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">		Sub.ch = (char*)malloc(len*sizeof(char));</span><br><span class="line">																</span><br><span class="line">		<span class="keyword">for</span>( i=0 ; i&lt;len ; i++ )	//复制 </span><br><span class="line">			Sub.ch[i] = Sub.ch[i+pos-1];</span><br><span class="line">		Sub.length = len;</span><br><span class="line">	&#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h4 id="text"><a href="#text" class="headerlink" title="text"></a>text</h4><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">int <span class="function"><span class="title">main</span></span>()&#123;</span><br><span class="line">	</span><br><span class="line">	<span class="built_in">return</span> 0;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+	
+	</div>
+	
+	<div id="current-post-cover" data-scr="/Est-C.coding.me/img/cart_cover.jpg"></div>
+
+	<!-- relate post, comment...-->
+	<div class="investment-container">
+		<div class="investment-header">
+			<div class="investment-title-1">
+				<div class="on">相关文章</div>
+				<div>评论</div>
+				<div>分享</div>
+			</div>
+			<div class="investment-title-2">	            
+				
+	<span>
+		<a href="javascript: window.scrollTo(0, 0);">返回顶部</a>
+		
+			<a href="/Est-C.coding.me/2018/10/23/malloc-and-free/" title="malloc() and free()" rel="prev">
+				&laquo;上一篇
+			</a>
+		
+		
+			<a href="/Est-C.coding.me/2018/10/19/Queue/" title="Queue" rel="next">
+				下一篇&raquo;
+			</a>
+			
+	</span>
+
+
+      		
+			</div>	
+		</div>
+		
+		<div class="investment-content">
+			<div class="investment-content-list">
+				
+
+<div class="relate-post">
+	
+		<ul>
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/Est-C.coding.me/2018/11/27/BiTree/" title="BiTree">
+								BiTree			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								十一月 27日, 2018				
+							</p>
+							<p class="relate-post-content">
+								This is a blog to show BiTree and BiThrTree.
+TreeBiTree1234567891011121314151617181920typedef int Status;typedef char...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/Est-C.coding.me/2018/11/27/BiTree/" title="BiTree">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="BiTree"/>
+							</a>
+						</div>
+					</li>											
+			
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/Est-C.coding.me/2018/11/01/SparseMatrix/" title="SparseMatrix">
+								SparseMatrix			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								十一月 1日, 2018				
+							</p>
+							<p class="relate-post-content">
+								This is a blog to show SparseMatrix.
+SparseMatrix稀疏矩阵
+123456789101112131415161718192021222324252627282930313233#inclu...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/Est-C.coding.me/2018/11/01/SparseMatrix/" title="SparseMatrix">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="SparseMatrix"/>
+							</a>
+						</div>
+					</li>											
+			
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/Est-C.coding.me/2018/10/26/排序算法/" title="排序算法">
+								排序算法			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								十月 26日, 2018				
+							</p>
+							<p class="relate-post-content">
+								This is a blog to show Sort.
+本文以时间复杂度区分算法，主要分为O(n^)、O(nlogn)、O(n+k)三类复杂度
+123本文动图均来自博客：https://www.cnblogs.com/eniac12...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/Est-C.coding.me/2018/10/26/排序算法/" title="排序算法">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="排序算法"/>
+							</a>
+						</div>
+					</li>											
+			
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/Est-C.coding.me/2018/10/23/malloc-and-free/" title="malloc() and free()">
+								malloc() and free()			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								十月 23日, 2018				
+							</p>
+							<p class="relate-post-content">
+								malloc()函数与free()函数
+在介绍malloc()与free()之前，我们先看一下alloc()与afree()函数，了解内存地址运算
+alloc()/afree()alloc()函数返回一个指向n个连续字符存储单元的指针...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/Est-C.coding.me/2018/10/23/malloc-and-free/" title="malloc() and free()">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="malloc() and free()"/>
+							</a>
+						</div>
+					</li>											
+			
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/Est-C.coding.me/2018/10/19/Queue/" title="Queue">
+								Queue			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								十月 19日, 2018				
+							</p>
+							<p class="relate-post-content">
+								This is a blog to show SqQueue and LinkQueue.
+QueueSqQueue顺序队列有八个操作：初始化、判空、销毁、置空、求长、获取队头、入队、出队
+123456789#define QUEUE...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/Est-C.coding.me/2018/10/19/Queue/" title="Queue">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="Queue"/>
+							</a>
+						</div>
+					</li>											
+			
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/Est-C.coding.me/2018/10/19/Stack/" title="Stack">
+								Stack			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								十月 19日, 2018				
+							</p>
+							<p class="relate-post-content">
+								This is a blog to show SqStack and LinkStack.
+StackSqStack12345678#define STACK_INIT_SIZE 100			//栈的大小#define STACKIN...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/Est-C.coding.me/2018/10/19/Stack/" title="Stack">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="Stack"/>
+							</a>
+						</div>
+					</li>											
+			
+			
+					<li>
+						<div class="relate-post-text">
+							<a class="relate-post-title" href="/Est-C.coding.me/2018/10/15/List/" title="List">
+								List			
+							</a>
+							<p class="relate-post-date">
+								<i class="fa fa-calendar"></i>
+								十月 15日, 2018				
+							</p>
+							<p class="relate-post-content">
+								This is a blog to show SqList LinkStack and StaticStack.
+ListSqList12345678#define LIST_INIT_SIZE 100	//线性表大小 #define...
+							</p>
+						</div>
+
+						<div class="relate-post-cover">
+							<a href="/Est-C.coding.me/2018/10/15/List/" title="List">				
+								
+								<img class="lazy" src="/img/placeholder.jpg" data-src="/img/cart_cover.jpg" alt="List"/>
+							</a>
+						</div>
+					</li>											
+			
+			
+		</ul>
+	
+</div>	
+			</div>
+			<div class="investment-content-list">
+				<div class="layout-comment">
+
+	
+
+		
+
+			<!-- I don't know !!!-->
+			<div>Please check the comment setting in config.yml of hexo-theme-Annie!</div>
+			
+		
+		
+	
+
+</div>
+			</div>
+			<div class="investment-content-list">
+				<div class="layout-share">
+	
+	
+
+		
+			
+			<!-- socialShare share -->
+			<div class="social-share"></div>
+
+<!--  css & js -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/css/share.min.css">
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/social-share.js/1.0.16/js/social-share.min.js"></script>
+			
+		
+		
+	
+</div>
+
+
+			</div>
+		</div>	
+	</div>
+	</div>
+</div>
+
+
+
+	<!-- leancloud -->
+	<!--
+	时间：2018-11-27
+	描述：
+		文章访问量：visitors
+		文章喜欢量：likes	
+		文章排行榜：topNPost
+		其他得说明：
+			01-Cookie相关的函数 
+				https://blog.csdn.net/somehow1002/article/details/78511541（Author：somehow1002）
+			02-visitors相关的函数 
+				https://blog.csdn.net/u013553529/article/details/63357382（Author：爱博客大伯）
+				https://notes.doublemine.me/2015-10-21-为NexT主题添加文章阅读量统计功能.html（Author：夏末）
+			03-topNPost相关的函数
+				https://hoxis.github.io/hexo-next-read-rank.html（Author：hoxis）
+			04-likes相关的函数，
+				参考了01 & 02进行简单的设计与实现
+-->
+
+
+	
+
+
+<!-- show math formula -->
+
+
+
+	 
+	<script src="/Est-C.coding.me/plugin/clipboard/clipboard.js"></script>
+	<script>
+		// Copy code !
+	    function codePreprocessing() {
+	        $("#article-content .highlight").each(function() {
+
+	            $(this).wrap('<div id="post-code"></div>');
+
+	        })
+
+	        $("#article-content #post-code").each(function() {
+
+	            $(this).prepend('<nav class="copy-nav"><span><i class="code-language"></i></span></nav>');
+
+	        })
+
+	        $("#article-content .copy-nav").each(function() {
+	            var temp = $(this).next().attr('class'),
+	                language = ((temp.length > 9) && (temp != null)) ? temp.substr(10) : "none"; //why 9? Need to check language?
+
+	            $(this).find('.code-language').text(language);
+
+	            $(this).append('<span class="copy-btn"><i class="fa fa-copy" aria-hidden="true"></i></span>');
+
+	        });
+	    }
+
+		function codeCopy() {
+		    $('#article-content #post-code').each(function(i) {
+		        var codeCopyId = 'codeCopy-' + i;
+
+		        var codeNode = $(this).find('.code'),
+		            copyButton = $(this).find('.copy-btn');
+
+		        codeNode.attr('id', codeCopyId);
+		        copyButton.attr('data-clipboard-target-id', codeCopyId);
+		    })
+
+		    
+			var clipboard = new ClipboardJS('.copy-btn', {
+					target: function(trigger) {
+						return document.getElementById(trigger.getAttribute('data-clipboard-target-id'));
+					}
+		      	});
+
+			//pure js
+			function showTooltip(elem, msg) {		   
+				elem.setAttribute('aria-label', msg);
+				elem.setAttribute('class', 'copy-btn copy-status');
+				setTimeout(function() {
+					elem.setAttribute('class', 'copy-btn');
+				}, 2000);
+			}
+
+			clipboard.on('success', function(e) {
+			    e.clearSelection();
+			    console.info('Action:', e.action);		   
+			    console.info('Trigger:', e.trigger);
+			    showTooltip(e.trigger, 'Copied!');
+			    
+			});
+			clipboard.on('error', function(e) {
+			    console.error('Action:', e.action);
+			    console.error('Trigger:', e.trigger);
+			});
+		
+
+		}
+
+		if ($('.layout-post').length) {
+		    codePreprocessing();
+		    codeCopy();
+		} 
+	</script>
+
+
+
+
+
+<link rel="stylesheet" href="/Est-C.coding.me/plugin/fancybox/jquery.fancybox.css">
+<script src="/Est-C.coding.me/plugin/fancybox/jquery.fancybox.js"></script>
+
+<script type="text/javascript">
+	var titleID = $('.article-title a'),
+		imageID = $('.article-content img'),
+		videoID = $('.article-content video');
+
+	var postTitle = titleID.text() ? titleID.text() : "No post title!";
+
+	imageID.each(function() {
+		var imgPath = $(this).attr('src'),
+			imgTitle = $(this).attr('alt') ? $(this).attr('alt') : "No image description!";
+
+		//给每个匹配的<img>元素打包, 即添加父元素<a>
+		$(this).wrap('<a data-fancybox="gallery" data-caption=" 《 ' + postTitle + ' 》 ' + imgTitle + ' "  href=" ' + imgPath + ' "> </a>');
+	});
+
+	videoID.each(function() {
+		var videoPath = $(this).attr('src');
+
+		//给每个匹配的<img>元素打包, 即添加父元素<a>
+		$(this).wrap('<a data-fancybox href=" ' + videoPath + ' "> </a>');
+	});
+	//TODO：支持html5 video
+
+	if($('#layout-post').length) {
+		$('[data-fancybox="gallery"]').fancybox({
+			loop: true,
+			buttons: [
+				"zoom",
+				"share",
+				"slideShow",
+				"fullScreen",
+				//"download",
+				"thumbs",
+				"close"
+			],
+			protect: false
+		});
+	}
+</script>
+		</main>
+
+		<!--footer-->
+		<footer>
+	<div class="social">
+		<ul>
+	
+		<li>
+			<a href="//github.com/Est-Z" target="_blank">
+				<i class="fa fa-github"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<i class="fa fa-weibo"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<i class="fa fa-pinterest"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<i class="fa fa-instagram"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="http://github.com/" target="_blank">
+				<i class="fa fa-twitter"></i>
+			</a>
+		</li>
+	
+		<li>
+			<a href="/Est-C.coding.me/atom.xml" target="_blank">
+				<i class="fa fa-rss"></i>
+			</a>
+		</li>
+			
+</ul>
+
+	</div>
+		
+	<div class="copyright">
+		<p>
+			 
+				&copy;2017 - 2019, content by Est. All Rights Reserved.
+			
+			
+			
+
+	<!-- busuanzi -->
+	<!-- busuanzi -->
+
+		
+	<script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+	
+
+		<span id="busuanzi_container_page_pv">
+	  		本文总阅读量<span id="busuanzi_value_page_pv"></span>次
+		</span>
+
+	
+
+
+
+
+		</p>
+		<p>
+			<a href="http://hexo.io/" title="Hexo" target="_blank" rel="noopener">Hexo</a> Theme <a href="https://github.com/Sariay/hexo-theme-Annie" title="Annie" target="_blank" rel="noopener">Annie</a> by Sariay.
+			<a href="javascript:zh_tran('s');" class="zh_click" id="zh_click_s">简体</a> 
+			<a href="javascript:zh_tran('t');" class="zh_click" id="zh_click_t">繁體</a>				
+		</p>
+	</div>		
+</footer>
+		
+	<!-- set '1' to show motto in all pages! -->
+
+	<script src="/Est-C.coding.me/plugin/motto/motto.js"></script>
+	
+	<script type="text/javascript">
+		$(".motto").html( getMingYanContent() );
+	</script>	
+
+
+
+
+
+<!-- love effect -->
+
+	<script src="/Est-C.coding.me/plugin/love/love.js"></script>
+
+
+<!-- back to top -->
+
+	
+	<div id="totop">
+  		<a href="javascript:;"  name="TOTOP" class="fa fa-arrow-up" ></a>
+	</div>
+
+
+
+
+<!-- site analysis -->
+
+
+	<!-- site-analysis -->
+	
+	
+	
+	
+	
+ 
+
+<script src="/Est-C.coding.me/plugin/vibrant/vibrant.js"></script>
+<script src="/Est-C.coding.me/plugin/chinese/chinese.js"></script>
+<script src="/Est-C.coding.me/plugin/imgLazyLoader/yall.min.js"></script>
+<script src="/Est-C.coding.me/plugin/imgResize/jquery.resizeimagetoparent.min.js"></script>
+<script src="/Est-C.coding.me/plugin/nicescroll/jquery.nicescroll.js"></script>
+<script src="/Est-C.coding.me/js/resizediv.js"></script>
+<script src="/Est-C.coding.me/js/main.js"></script>
+	</body>	
+</html>
