@@ -262,7 +262,7 @@
 				<div class="post-content">
 					
 						This is a blog to show BiTree and BiThrTree.
-TreeBiTree1234567891011121314151617181920typedef int Status;typedef char TElemType;typedef struct BiTNode&#123;	TElemType data;	struct BiTNode *lchild,*rchild;	struct BiTNode *parent;&#125;BiTNode,*BiTree;//输出 Status PrintTElemType(TElemType e)&#123;	p...
+TreeBiTree1234567891011121314151617181920typedef int...
 					
 				</div>
 				
@@ -338,7 +338,7 @@ TreeBiTree1234567891011121314151617181920typedef int Status;typedef char TElemTy
 					
 						This is a blog to show SparseMatrix.
 SparseMatrix稀疏矩阵
-123456789101112131415161718192021222324252627282930313233#include&lt;stdio.h&gt;#include&lt;stdlib.h&gt;#include&lt;string.h&gt;#define ERROR 0#define OK 1#define TRUE 1#define FALSE 0#define MAXSIZE 12500 	//非零元最大值typedef int ElemType;typedef...
+1234567891011121314151617181920212223242526...
 					
 				</div>
 				
@@ -414,9 +414,7 @@ SparseMatrix稀疏矩阵
 					
 						This is a blog to show Sort.
 本文以时间复杂度区分算法，主要分为O(n^)、O(nlogn)、O(n+k)三类复杂度
-123本文动图均来自博客：https://www.cnblogs.com/eniac12/p/5329396.html (主要介绍比较排序)https://www.cnblogs.com/onepixel/articles/7674659.html (以非线性时间比较类排序和线性时间非比较类排序区分)
-几个重要概念：
-1.比较排序与非比较排序123456比较类排序：通过比较来决定元素间的相对次序，所以时间复杂度不能突破O(nlogn)，称为非线...
+123本文动图均来自博客：https://www...
 					
 				</div>
 				
@@ -491,7 +489,7 @@ SparseMatrix稀疏矩阵
 				<div class="post-content">
 					
 						This is blog to show Array.
-Array12345678910111213141516171819202122232425262728293031323334#include&lt;stdio.h&gt;#include&lt;stdarg.h&gt;		//提供宏va_start、va_arg、va_end #include&lt;stdlib.h&gt;		//变长参数列表需要 #define ERROR 0#define OK 1#define TRUE 1#define FALSE 0#define OVERFLOW -1 #define UNDEFLO...
+Array12345678910111213141516171819202122232425262728293031323334#incl...
 					
 				</div>
 				
@@ -567,10 +565,7 @@ Array12345678910111213141516171819202122232425262728293031323334#include&lt;stdi
 					
 						malloc()函数与free()函数
 在介绍malloc()与free()之前，我们先看一下alloc()与afree()函数，了解内存地址运算
-alloc()/afree()alloc()函数返回一个指向n个连续字符存储单元的指针afree()函数释放已分配的存储空间
-这两个函数功能类是malloc()与free()，但它们是“不完善的”，因为alloc()与free()是以栈的方式（后进先出）进行存储空间管理的
-alloc()与afree()的实现alloc()是对一个大数组allocbuf中的空间进行分配
-allocbuf是alloc()与afree()的私有数组，并且在管理中并...
+alloc()/afree()alloc()函...
 					
 				</div>
 				
@@ -645,7 +640,7 @@ allocbuf是alloc()与afree()的私有数组，并且在管理中并...
 				<div class="post-content">
 					
 						This is a blog to show SString.
-StringSString12345678910111213141516171819#define MAXSTRLEN 255		//用户可在255以内定义最大串长 typedef unsigned char SString[MAXSTRLEN + 1];		//0号单元存放串的长度 typedef int Status;void StrPrint(SString T) ;	// 输出字符串TStatus StrAssign(SString &amp;T,char chars[]);	//生成一个其值等于chars的串T S...
+StringSString12345678910111213141516171819#define MAXSTRLEN 255		...
 					
 				</div>
 				
@@ -721,9 +716,7 @@ StringSString12345678910111213141516171819#define MAXSTRLEN 255		//用户可在2
 					
 						This is a blog to show SqQueue and LinkQueue.
 QueueSqQueue顺序队列有八个操作：初始化、判空、销毁、置空、求长、获取队头、入队、出队
-123456789#define QUEUE_INIT_SIZE 100			//栈的大小#define STACKINCREMENT 10			//栈的增量typedef struct&#123;				//栈的结构体	QElemType * base;	QElemType  front;	QElemType  rear;	int queuesize;&#125;SqQueue;
-
-初始化12345...
+12...
 					
 				</div>
 				
@@ -798,9 +791,7 @@ QueueSqQueue顺序队列有八个操作：初始化、判空、销毁、置空�
 				<div class="post-content">
 					
 						This is a blog to show SqStack and LinkStack.
-StackSqStack12345678#define STACK_INIT_SIZE 100			//栈的大小#define STACKINCREMENT 10			//栈的增量typedef struct&#123;				//栈的结构体	SElemType * base;		//栈底指针 	SElemType * top;		//栈顶指针 	int stacksize;			//栈大小 &#125;SqStack;
-
-1234567891011121314151617181920212223...
+StackSqStack12345678#define STACK_INIT_SIZE 100			/...
 					
 				</div>
 				
@@ -875,9 +866,7 @@ StackSqStack12345678#define STACK_INIT_SIZE 100			//栈的大小#define STACKINC
 				<div class="post-content">
 					
 						This is a blog to show SqList LinkStack and StaticStack.
-ListSqList12345678#define LIST_INIT_SIZE 100	//线性表大小 #define INIT_INCREMENT 10 	//线性表增量typedef	struct&#123;	ElemType *elem;	int length;	int listSize;&#125;SqList;
-
-1234567891011121314151617181920212223242526272829303132333435363738394041424...
+ListSqList12345678#define LIST_INIT_SIZE...
 					
 				</div>
 				
